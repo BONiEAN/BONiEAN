@@ -22,11 +22,11 @@ export const ContactForm = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-gray-50">
+    <section id="contact" className="py-24 bg-boniean-dark-charcoal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Get in Touch</h2>
-          <p className="mt-4 text-xl text-gray-500">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">Get in Touch</h2>
+          <p className="mt-4 text-xl text-gray-400">
             Let's discuss how we can help transform your business
           </p>
         </div>
@@ -34,7 +34,7 @@ export const ContactForm = () => {
         <div className="mt-16 max-w-xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-300">
                 Name
               </label>
               <Input
@@ -43,12 +43,12 @@ export const ContactForm = () => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="mt-1"
+                className="mt-1 bg-boniean-charcoal border-boniean-charcoal text-white placeholder:text-gray-400"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
                 Email
               </label>
               <Input
@@ -57,12 +57,12 @@ export const ContactForm = () => {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="mt-1"
+                className="mt-1 bg-boniean-charcoal border-boniean-charcoal text-white placeholder:text-gray-400"
               />
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-300">
                 Message
               </label>
               <Textarea
@@ -70,11 +70,14 @@ export const ContactForm = () => {
                 required
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="mt-1 h-32"
+                className="mt-1 h-32 bg-boniean-charcoal border-boniean-charcoal text-white placeholder:text-gray-400"
               />
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button 
+              type="submit" 
+              className="w-full bg-boniean-orange-bright hover:bg-orange-600 text-white transition-colors"
+            >
               Send Message
             </Button>
           </form>
