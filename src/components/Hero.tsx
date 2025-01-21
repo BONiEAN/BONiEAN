@@ -6,10 +6,11 @@ export const Hero = () => {
     <div className="relative min-h-screen flex items-center overflow-hidden">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-boniean-dark-charcoal to-boniean-charcoal animate-gradient -z-10">
-        {/* Animated floating circles */}
-        <div className="absolute w-96 h-96 bg-boniean-orange/10 rounded-full -top-20 -left-20 animate-float-slow" />
-        <div className="absolute w-72 h-72 bg-boniean-orange-bright/5 rounded-full top-1/2 -right-20 animate-float" />
-        <div className="absolute w-64 h-64 bg-boniean-orange/5 rounded-full bottom-20 left-1/4 animate-float-delayed" />
+        {/* Animated architectural shapes */}
+        <div className="absolute w-96 h-[600px] bg-boniean-orange/5 skew-x-12 -top-20 -left-32 animate-float-slow" />
+        <div className="absolute w-72 h-[400px] bg-boniean-orange-bright/5 -skew-x-12 top-1/3 -right-20 animate-float" />
+        <div className="absolute w-80 h-[500px] bg-boniean-orange/5 skew-x-6 bottom-0 left-1/4 animate-float-delayed" />
+        <div className="absolute w-64 h-[300px] bg-boniean-orange-bright/3 -skew-x-6 top-20 right-1/4 animate-float" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
