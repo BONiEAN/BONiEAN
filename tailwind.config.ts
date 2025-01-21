@@ -27,6 +27,12 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        boniean: {
+          orange: "#FEC6A1",
+          "orange-bright": "#F97316",
+          charcoal: "#403E43",
+          "dark-charcoal": "#221F26",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
