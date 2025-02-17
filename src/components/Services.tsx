@@ -1,5 +1,5 @@
 
-import { Brain, Cloud, Container, Cog, Layout } from 'lucide-react';
+import { Brain, Cloud, Container, Cog, Layout, Building2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from './ui/card';
 
 const services = [
@@ -27,6 +27,11 @@ const services = [
     title: "Frontend Development",
     description: "Modern, responsive web applications with cutting-edge frameworks and tools",
     icon: Layout
+  },
+  {
+    title: "System Design & Architecture",
+    description: "Scalable and robust system architecture design for enterprise applications",
+    icon: Building2
   }
 ];
 
