@@ -1,4 +1,5 @@
-import { Brain, Cloud, Container, Cog } from 'lucide-react';
+
+import { Brain, Cloud, Container, Cog, Layout } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from './ui/card';
 
 const services = [
@@ -21,6 +22,11 @@ const services = [
     title: "Cloud Solutions",
     description: "Scalable cloud infrastructure design and implementation",
     icon: Cloud
+  },
+  {
+    title: "Frontend Development",
+    description: "Modern, responsive web applications with cutting-edge frameworks and tools",
+    icon: Layout
   }
 ];
 
@@ -35,7 +41,7 @@ export const Services = () => {
           </p>
         </div>
 
-        <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
             <Card key={service.title} className="group hover:shadow-lg transition-shadow duration-300 bg-boniean-charcoal border-boniean-orange/20">
               <CardHeader>
