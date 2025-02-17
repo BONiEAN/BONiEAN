@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +15,10 @@ export const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-boniean-dark-charcoal/80 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
@@ -28,11 +34,11 @@ export const Navbar = () => {
           
           <div className="hidden md:flex items-center space-x-8">
             <a href="#services" className="text-white hover:text-boniean-orange transition-colors">Services</a>
-            <a href="#about" className="text-white hover:text-boniean-orange transition-colors">About</a>
-            <a href="#contact" className="text-white hover:text-boniean-orange transition-colors">Contact</a>
+            <Link to="/about" className="text-white hover:text-boniean-orange transition-colors">About</Link>
             <Button 
               variant="default" 
               className="ml-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange text-white"
+              onClick={scrollToContact}
             >
               Get Started
             </Button>
@@ -50,11 +56,11 @@ export const Navbar = () => {
         <div className="md:hidden bg-boniean-dark-charcoal">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#services" className="block px-3 py-2 text-white hover:text-boniean-orange">Services</a>
-            <a href="#about" className="block px-3 py-2 text-white hover:text-boniean-orange">About</a>
-            <a href="#contact" className="block px-3 py-2 text-white hover:text-boniean-orange">Contact</a>
+            <Link to="/about" className="block px-3 py-2 text-white hover:text-boniean-orange">About</Link>
             <Button 
               variant="default" 
               className="w-full mt-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
+              onClick={scrollToContact}
             >
               Get Started
             </Button>
