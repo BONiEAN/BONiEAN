@@ -1,5 +1,4 @@
-
-import { Brain, Cloud, Container, Cog, Layout, Building2 } from 'lucide-react';
+import { Brain, Cloud, Container, Cog, ChartNetwork, CloudUpload, Layout, Building2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from './ui/card';
 
 const services = [
@@ -32,6 +31,16 @@ const services = [
     title: "System Design & Architecture",
     description: "Scalable and robust system architecture design for enterprise applications",
     icon: Building2
+  },
+  {
+    title: "Technical Auditing",
+    description: "Expert evaluation of technical proposals for accuracy, feasibility, and value",
+    icon: ChartNetwork
+  },
+  {
+    title: "Cloud Migration",
+    description: "Strategic cloud transition planning with focus on technical viability and ROI",
+    icon: Cloud
   }
 ];
 
