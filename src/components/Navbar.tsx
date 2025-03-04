@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
@@ -17,7 +16,6 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -34,7 +32,6 @@ export const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMobileMenuOpen]);
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -47,7 +44,6 @@ export const Navbar = () => {
   }, [isMobileMenuOpen]);
 
   const scrollToContact = () => {
-    // If we're not on the homepage, navigate there first, then scroll to contact
     if (location.pathname !== '/') {
       window.location.href = '/#contact';
     } else {
@@ -57,7 +53,6 @@ export const Navbar = () => {
   };
 
   const scrollToServices = () => {
-    // If we're not on the homepage, navigate there first, then scroll to services
     if (location.pathname !== '/') {
       window.location.href = '/#services';
     } else {
@@ -79,7 +74,7 @@ export const Navbar = () => {
               <img 
                 src="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" 
                 alt="Boniean Digital Solutions Inc." 
-                className="h-[10.7rem]" 
+                className="h-10" 
               />
             </Link>
           </div>
@@ -114,7 +109,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Slide-in Mobile Menu - No dimming overlay */}
       <div 
         className={`fixed top-0 right-0 h-full w-64 bg-boniean-dark-charcoal/60 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
