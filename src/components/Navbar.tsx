@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,7 +18,21 @@ export const Navbar = () => {
   }, []);
 
   const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    // If we're not on the homepage, navigate there first, then scroll to contact
+    if (location.pathname !== '/') {
+      window.location.href = '/#contact';
+    } else {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToServices = () => {
+    // If we're not on the homepage, navigate there first, then scroll to services
+    if (location.pathname !== '/') {
+      window.location.href = '/#services';
+    } else {
+      document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -25,15 +40,22 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <img 
-              src="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" 
-              alt="Boniean Digital Solutions Inc." 
-              className="h-10"
-            />
+            <Link to="/">
+              <img 
+                src="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" 
+                alt="Boniean Digital Solutions Inc." 
+                className="h-10"
+              />
+            </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-white hover:text-boniean-orange transition-colors">Services</a>
+            <button 
+              onClick={scrollToServices} 
+              className="text-white hover:text-boniean-orange transition-colors"
+            >
+              Services
+            </button>
             <Link to="/about" className="text-white hover:text-boniean-orange transition-colors">About</Link>
             <Button 
               variant="default" 
@@ -55,7 +77,12 @@ export const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-boniean-dark-charcoal">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#services" className="block px-3 py-2 text-white hover:text-boniean-orange">Services</a>
+            <button 
+              onClick={scrollToServices}
+              className="block px-3 py-2 text-white hover:text-boniean-orange w-full text-left"
+            >
+              Services
+            </button>
             <Link to="/about" className="block px-3 py-2 text-white hover:text-boniean-orange">About</Link>
             <Button 
               variant="default" 
