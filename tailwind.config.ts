@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -77,16 +78,22 @@ export default {
           to: { height: "0" },
         },
         float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '0%': { transform: 'translateY(0)' },
+          '25%': { transform: 'translateY(-40px) translateX(20px)' },
+          '50%': { transform: 'translateY(-60px) translateX(-15px)' },
+          '75%': { transform: 'translateY(-25px) translateX(-25px)' },
+          '100%': { transform: 'translateY(0)' },
         },
         shimmer: {
           '0%': { backgroundPosition: '100% 100%' },
           '100%': { backgroundPosition: '0% 0%' },
         },
         gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '0%': { backgroundPosition: '0% 50%' },
+          '25%': { backgroundPosition: '50% 100%' },
           '50%': { backgroundPosition: '100% 50%' },
+          '75%': { backgroundPosition: '50% 0%' },
+          '100%': { backgroundPosition: '0% 50%' },
         },
       },
       animation: {

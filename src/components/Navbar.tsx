@@ -79,7 +79,7 @@ export const Navbar = () => {
               <img 
                 src="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" 
                 alt="Boniean Digital Solutions Inc." 
-                className="h-10"
+                className="h-[10.7rem]" 
               />
             </Link>
           </div>
@@ -114,14 +114,9 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Slide-in Mobile Menu */}
+      {/* Slide-in Mobile Menu - No dimming overlay */}
       <div 
-        className={`fixed inset-0 bg-black bg-opacity-50 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 z-40' : 'opacity-0 pointer-events-none -z-10'}`} 
-        onClick={() => setIsMobileMenuOpen(false)}
-      ></div>
-      
-      <div 
-        className={`fixed top-0 right-0 h-full w-64 bg-boniean-dark-charcoal shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full w-64 bg-boniean-dark-charcoal/60 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="flex justify-end p-4">
           <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
