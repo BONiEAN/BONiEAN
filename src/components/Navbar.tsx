@@ -17,6 +17,35 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        isMobileMenuOpen && 
+        !target.closest('.mobile-menu') && 
+        !target.closest('.mobile-menu-toggle')
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
+
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMobileMenuOpen]);
+
   const scrollToContact = () => {
     // If we're not on the homepage, navigate there first, then scroll to contact
     if (location.pathname !== '/') {
@@ -24,6 +53,7 @@ export const Navbar = () => {
     } else {
       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsMobileMenuOpen(false);
   };
 
   const scrollToServices = () => {
@@ -33,6 +63,11 @@ export const Navbar = () => {
     } else {
       document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleAboutClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -67,33 +102,58 @@ export const Navbar = () => {
           </div>
 
           <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="mobile-menu-toggle"
+            >
+              <Menu className="h-6 w-6 text-white" />
             </Button>
           </div>
         </div>
       </div>
 
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-boniean-dark-charcoal">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <button 
-              onClick={scrollToServices}
-              className="block px-3 py-2 text-white hover:text-boniean-orange w-full text-left"
-            >
-              Services
-            </button>
-            <Link to="/about" className="block px-3 py-2 text-white hover:text-boniean-orange">About</Link>
-            <Button 
-              variant="default" 
-              className="w-full mt-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
-              onClick={scrollToContact}
-            >
-              Get Started
-            </Button>
-          </div>
+      {/* Slide-in Mobile Menu */}
+      <div 
+        className={`fixed inset-0 bg-black bg-opacity-50 md:hidden transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100 z-40' : 'opacity-0 pointer-events-none -z-10'}`} 
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
+      
+      <div 
+        className={`fixed top-0 right-0 h-full w-64 bg-boniean-dark-charcoal shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <div className="flex justify-end p-4">
+          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+            <X className="h-6 w-6 text-white" />
+          </Button>
         </div>
-      )}
+        
+        <div className="px-4 pt-2 pb-8 space-y-6 flex flex-col items-center">
+          <button 
+            onClick={scrollToServices}
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+          >
+            Services
+          </button>
+          
+          <Link 
+            to="/about" 
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={handleAboutClick}
+          >
+            About
+          </Link>
+          
+          <Button 
+            variant="default" 
+            className="w-full mt-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
+            onClick={scrollToContact}
+          >
+            Get Started
+          </Button>
+        </div>
+      </div>
     </nav>
   );
 };
