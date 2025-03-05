@@ -7,7 +7,7 @@ const About = () => {
       <Navbar />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="space-y-8 animate-fade-in">
-          <h1 className="text-4xl font-bold text-white text-center mb-12">About Boniean</h1>
+          <h1 className="text-4xl font-bold text-white text-center mb-12">About BONiEAN</h1>
           
           <div className="prose prose-invert max-w-none space-y-6">
             <p className="text-lg text-gray-300">
