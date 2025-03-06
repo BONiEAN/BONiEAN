@@ -1,4 +1,4 @@
-import { Brain, Cloud, Container, Cog, ChartNetwork, CloudUpload, Layout, Building2 } from 'lucide-react';
+import { Brain, Cloud, Container, Cog, ChartNetwork, CloudUpload, ChartScatter,  Layout, Building2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription } from './ui/card';
 
 const services = [
@@ -13,7 +13,7 @@ const services = [
     icon: Container
   },
   {
-    title: "DevOps",
+    title: "CI/CD",
     description: "Streamline your development pipeline and automate deployment processes",
     icon: Cog
   },
@@ -23,7 +23,7 @@ const services = [
     icon: Cloud
   },
   {
-    title: "Frontend Development",
+    title: "Web Design",
     description: "Modern, responsive web applications with cutting-edge frameworks and tools",
     icon: Layout
   },
@@ -40,7 +40,12 @@ const services = [
   {
     title: "Cloud Migration",
     description: "Strategic cloud transition planning with focus on technical viability and ROI",
-    icon: Cloud
+    icon: CloudUpload
+  },
+  {
+    title: "Data Analytics",
+    description: "Advanced data analysis and visualization powered by AI for actionable insights",
+    icon: ChartScatter
   }
 ];
 
