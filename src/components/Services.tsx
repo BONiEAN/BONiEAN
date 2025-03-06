@@ -8,23 +8,23 @@ const services = [
     icon: Brain
   },
   {
-    title: "Kubernetes",
-    description: "Container orchestration and microservices architecture implementation",
-    icon: Container
-  },
-  {
     title: "CI/CD",
-    description: "Streamline your development pipeline and automate deployment processes",
+    description: "Automated testing and deployment pipelines for faster, more reliable software delivery",
     icon: Cog
   },
   {
-    title: "Cloud Solutions",
-    description: "Scalable cloud infrastructure design and implementation",
+    title: "Serverless & Containerization", 
+    description: "Cloud-native solutions using containers and serverless to optimize resources and scalability",
+    icon: Container
+  },
+  {
+    title: "Cloud Infrastructure & Migration",
+    description: "Strategic cloud adoption, infrastructure design and scaling, and seamless migration process",
     icon: Cloud
   },
   {
-    title: "Web Design",
-    description: "Modern, responsive web applications with cutting-edge frameworks and tools",
+    title: "Application Development",
+    description: "Full-stack development of scalable, modern applications using cutting-edge frameworks and tools",
     icon: Layout
   },
   {
@@ -44,7 +44,7 @@ const services = [
   },
   {
     title: "Data Analytics",
-    description: "Advanced data analysis and visualization powered by AI for actionable insights",
+    description: "Transforming raw data into actionable insights through advanced visualization and predictive modeling",
     icon: ChartScatter
   }
 ];

@@ -66,16 +66,23 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-boniean-dark-charcoal/80 backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-boniean-dark-charcoal/90 backdrop-blur-lg shadow-md' 
+        : 'bg-boniean-dark-charcoal/40 backdrop-blur-sm'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/">
+            <Link to="/" className="flex items-center gap-3">
               <img 
-                src="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" 
+                src="/lovable-uploads/Boniean_logo.png" 
                 alt="Boniean Digital Solutions Inc." 
-                className="h-10" 
+                className="h-16 mt-4" 
               />
+              <span className="text-xl font-semibold bg-gradient-to-r from-boniean-orange to-boniean-orange-bright bg-clip-text text-transparent hidden sm:inline">
+                BONiEAN Digital Solutions
+              </span>
             </Link>
           </div>
           
