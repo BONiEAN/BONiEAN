@@ -12,13 +12,37 @@ export const ContactForm = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    setFormData({ name: '', email: '', message: '' });
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          to: 'info@boniean.com'
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -28,6 +52,9 @@ export const ContactForm = () => {
           <h2 className="text-3xl font-bold text-white sm:text-4xl">Get in Touch</h2>
           <p className="mt-4 text-xl text-gray-400">
             Let's discuss how we can help transform your business
+          </p>
+          <p className="mt-2 text-sm text-gray-400">
+            We respond within 24 hours!
           </p>
         </div>
 
