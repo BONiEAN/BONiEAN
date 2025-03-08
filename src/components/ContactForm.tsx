@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from './ui/use-toast';
+import emailjs from '@emailjs/browser'; 
 
 export const ContactForm = () => {
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null); 
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,27 +19,27 @@ export const ContactForm = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          to: 'info@boniean.com'
-        }),
-      });
+      if (!formRef.current) return;
 
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
+      const response = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        { from_name: formData.name, from_email: formData.email, message: formData.message },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('EmailJS response:', response);
+
+      if (response.text !== 'OK') throw new Error('Failed to send message');
 
       toast({
         title: "Message sent!",
         description: "We'll get back to you as soon as possible.",
       });
+
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('Error sending email:', error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again later.",
@@ -59,13 +62,14 @@ export const ContactForm = () => {
         </div>
 
         <div className="mt-16 max-w-xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-300">
                 Name
               </label>
               <Input
                 id="name"
+                name="name" 
                 type="text"
                 required
                 value={formData.name}
@@ -80,6 +84,7 @@ export const ContactForm = () => {
               </label>
               <Input
                 id="email"
+                name="email" 
                 type="email"
                 required
                 value={formData.email}
@@ -94,6 +99,7 @@ export const ContactForm = () => {
               </label>
               <Textarea
                 id="message"
+                name="message" 
                 required
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
