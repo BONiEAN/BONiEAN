@@ -8,18 +8,10 @@ const Index = () => {
     <div className="h-screen overflow-y-scroll">
       <Navbar />
 
-      {/* Snap scrolling only between Hero and Services */}
-      <div className="h-screensnap-y snap-mandatory ">
-        <div className="snap-start h-screen">
-          <Hero />
-        </div>
-        <div className="snap-start h-screen">
-          <Services />
-        </div>
-      </div>
-
-      {/* Normal scrolling for ContactForm */}
-      <div className="mt-4 h-auto">
+      {/* Regular scrolling for all sections */}
+      <div>
+        <Hero />
+        <Services />
         <ContactForm />
       </div>
     </div>
