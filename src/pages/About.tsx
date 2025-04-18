@@ -174,85 +174,86 @@ const About = () => {
           </div>
         </section>
 
-        {/* Our Team */}
+        {/* Our Achievements */}
         <section className="py-16 bg-boniean-dark-charcoal">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-white">Our Leadership Team</h2>
+              <h2 className="text-3xl font-bold text-white">Our Collective Experience</h2>
               <p className="mt-4 text-xl text-gray-300">
-                Meet the experts behind BONiEAN's success
+                The combined expertise and accomplishments of our team
               </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Team Member 1 */}
-              <div className="bg-boniean-charcoal rounded-lg overflow-hidden border border-boniean-orange/20">
-                <div className="h-64 bg-gray-700">
-                  <img 
-                    src="/lovable-uploads/team-member-1.jpg" 
-                    alt="John Smith" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1000&auto=format&fit=crop";
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white">John Smith</h3>
-                  <p className="text-boniean-orange mb-4">CEO & Co-Founder</p>
-                  <p className="text-gray-300">
-                    With over 15 years of experience in technology leadership, John brings strategic vision 
-                    and technical expertise to guide BONiEAN's growth and innovation.
+            <div className="prose prose-invert max-w-none">
+              <p className="text-lg text-gray-300 mb-6">
+                We are a team of experienced engineers and researchers with deep expertise in artificial intelligence, software engineering, and cloud-native development. With diverse backgrounds spanning industry, academia, and enterprise consulting, we bring together a powerful blend of technical proficiency, research-driven innovation, and real-world impact.
+              </p>
+              
+              <p className="text-lg text-gray-300 mb-6">
+                Our team's collective experience includes:
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">AI/ML Expertise</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    From building intelligent document processing and Generative AI solutions at AWS to developing computer vision systems and recommendation engines in fintech and manufacturing, our engineers have delivered scalable, production-grade machine learning systems across healthcare, finance, and retail sectors.
                   </p>
                 </div>
               </div>
               
-              {/* Team Member 2 */}
-              <div className="bg-boniean-charcoal rounded-lg overflow-hidden border border-boniean-orange/20">
-                <div className="h-64 bg-gray-700">
-                  <img 
-                    src="/lovable-uploads/team-member-2.jpg" 
-                    alt="Sarah Johnson" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop";
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white">Sarah Johnson</h3>
-                  <p className="text-boniean-orange mb-4">CTO & Co-Founder</p>
-                  <p className="text-gray-300">
-                    Sarah is a recognized expert in AI and machine learning, with a passion for 
-                    developing innovative solutions that solve complex business challenges.
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">Cloud & DevOps Mastery</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    Our team includes AWS Certified Solutions Architects with hands-on experience across multiple cloud platforms, Kubernetes, Terraform, and serverless infrastructure. We design and implement resilient cloud architectures and CI/CD pipelines that power efficient, secure, and scalable applications, leveraging our deep knowledge of cloud best practices and optimization strategies.
                   </p>
                 </div>
               </div>
               
-              {/* Team Member 3 */}
-              <div className="bg-boniean-charcoal rounded-lg overflow-hidden border border-boniean-orange/20">
-                <div className="h-64 bg-gray-700">
-                  <img 
-                    src="/lovable-uploads/team-member-3.jpg" 
-                    alt="Michael Chen" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000&auto=format&fit=crop";
-                    }}
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white">Michael Chen</h3>
-                  <p className="text-boniean-orange mb-4">VP of Engineering</p>
-                  <p className="text-gray-300">
-                    Michael leads our engineering team with a focus on technical excellence, 
-                    scalable architecture, and delivering high-quality solutions for our clients.
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">Enterprise Consulting</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    Our experience at Accenture includes architecting secure document distribution portals, leading cloud migrations, and implementing FinOps strategies that reduced infrastructure costs by 40%. We've facilitated stakeholder workshops to define technical requirements, delivered architectural roadmaps, and managed diverse technical teams across DevOps, infrastructure, and automation projects, ensuring seamless delivery while maintaining security and compliance.
                   </p>
                 </div>
               </div>
+              
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">Academic & Research Rigor</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    With a Ph.D. in Computer Science and over a dozen published papers in machine learning, computer vision, and NLP, our team integrates cutting-edge research into practical, enterprise-ready solutions. Our research has influenced areas such as player engagement modeling, political discourse analysis, and uncertainty quantification in AI.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">Software Engineering Leadership</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    We've led high-visibility projects at organizations like AWS, NVIDIA, and TrendMicro, designing everything from low-latency RPC frameworks to intelligent ETL pipelines and real-time analytics dashboards. Our work has consistently reduced processing times, improved accuracy, and delivered measurable business value.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20">
+                <h3 className="text-2xl font-semibold text-white mb-6">Education & Enablement</h3>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-lg text-gray-300">
+                    Beyond development, our team contributes to knowledge-sharing as lead instructors for enterprise AI courses, covering topics like large language models, prompt engineering, and AI governance across North America, Europe, and the Middle East.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="prose prose-invert max-w-none mt-12">
+              <p className="text-lg text-gray-300">
+                Together, we bring a track record of transforming complex problems into elegant, data-driven, and scalable solutions. Whether you're building an AI-powered product, modernizing cloud infrastructure, or seeking strategic technology guidance, our team is ready to partner with you at every step of the journey.
+              </p>
             </div>
           </div>
         </section>
