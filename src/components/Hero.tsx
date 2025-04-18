@@ -1,12 +1,8 @@
-
 import { ArrowRight } from 'lucide-react';
 import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 export const Hero = () => {
-  const scrollToContact = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className="relative min-h-screen flex items-center overflow-hidden">
       {/* Animated background gradient with enhanced movement */}
@@ -30,24 +26,22 @@ export const Hero = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="text-center">
-          <p className="text-base font-semibold text-boniean-orange tracking-wide uppercase animate-fade-in">
-            AI Engineering Consultancy
-          </p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl animate-fade-in">
-            Transform Your Business with <span className="text-transparent bg-clip-text bg-gradient-to-r from-boniean-orange to-boniean-orange-bright animate-pulse">AI Innovation</span>
+            BONiEAN Digital Solutions
           </h1>
           <p className="mt-8 max-w-2xl mx-auto text-xl text-gray-300 animate-fade-in">
-            Expert consulting in AI, Kubernetes, DevOps, and Cloud solutions. We help businesses navigate the future of technology.
+            Transforming businesses through innovative AI and cloud solutions
           </p>
           <div className="mt-12 flex justify-center gap-x-6 animate-fade-in">
-            <Button 
-              size="lg" 
-              className="group bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange animate-shimmer"
-              onClick={scrollToContact}
-            >
-              Get Started
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <Link to="/contact">
+              <Button 
+                size="lg" 
+                className="group bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange animate-shimmer"
+              >
+                Find Out More
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

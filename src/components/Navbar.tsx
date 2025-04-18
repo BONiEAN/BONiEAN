@@ -43,25 +43,7 @@ export const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
-  const scrollToContact = () => {
-    if (location.pathname !== '/') {
-      window.location.href = '/#contact';
-    } else {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
-  const scrollToServices = () => {
-    if (location.pathname !== '/') {
-      window.location.href = '/#services';
-    } else {
-      document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
-
-  const handleAboutClick = () => {
+  const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
@@ -87,20 +69,36 @@ export const Navbar = () => {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={scrollToServices} 
-              className="text-white hover:text-boniean-orange transition-colors"
+            <Link 
+              to="/" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/' ? 'text-boniean-orange' : ''}`}
             >
-              Services
-            </button>
-            <Link to="/about" className="text-white hover:text-boniean-orange transition-colors">About</Link>
-            <Button 
-              variant="default" 
-              className="ml-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange text-white"
-              onClick={scrollToContact}
+              Home
+            </Link>
+            <Link 
+              to="/about" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/about' ? 'text-boniean-orange' : ''}`}
             >
-              Get Started
-            </Button>
+              About Us
+            </Link>
+            <Link 
+              to="/services" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname.includes('/services') ? 'text-boniean-orange' : ''}`}
+            >
+              Our Services
+            </Link>
+            <Link 
+              to="/clients" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/clients' ? 'text-boniean-orange' : ''}`}
+            >
+              Our Clients
+            </Link>
+            <Link 
+              to="/contact" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/contact' ? 'text-boniean-orange' : ''}`}
+            >
+              Contact Us
+            </Link>
           </div>
 
           <div className="md:hidden">
@@ -126,28 +124,45 @@ export const Navbar = () => {
         </div>
         
         <div className="px-4 pt-2 pb-8 space-y-6 flex flex-col items-center">
-          <button 
-            onClick={scrollToServices}
+          <Link 
+            to="/" 
             className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={closeMobileMenu}
           >
-            Services
-          </button>
+            Home
+          </Link>
           
           <Link 
             to="/about" 
             className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
-            onClick={handleAboutClick}
+            onClick={closeMobileMenu}
           >
-            About
+            About Us
           </Link>
           
-          <Button 
-            variant="default" 
-            className="w-full mt-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
-            onClick={scrollToContact}
+          <Link 
+            to="/services" 
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={closeMobileMenu}
           >
-            Get Started
-          </Button>
+            Our Services
+          </Link>
+          
+          <Link 
+            to="/clients" 
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={closeMobileMenu}
+          >
+            Our Clients
+          </Link>
+          
+          <Link 
+            to="/contact" 
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={closeMobileMenu}
+          >
+            Contact Us
+          </Link>
         </div>
       </div>
     </nav>
