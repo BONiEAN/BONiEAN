@@ -134,7 +134,7 @@ const Services = () => {
                 <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
                   Contact us today to discuss how our services can help you achieve your business goals and stay ahead of the competition.
                 </p>
-                <Link to="/contact">
+                <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
                   <Button 
                     size="lg" 
                     className="bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
