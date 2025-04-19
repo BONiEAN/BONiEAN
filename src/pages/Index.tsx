@@ -1,19 +1,27 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Services } from "@/components/Services";
-import { ContactForm } from "@/components/ContactForm";
+import { WhatWeDo } from "@/components/WhatWeDo";
+import { WhatSetsUsApart } from "@/components/WhatSetsUsApart";
+import { ServicesSection } from "@/components/Services";
+import { AboutSection } from "@/components/AboutSection";
+import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="h-screen overflow-y-scroll">
+    <div className="min-h-screen">
       <Navbar />
 
-      {/* Regular scrolling for all sections */}
-      <div>
+      <main>
         <Hero />
-        <Services />
-        <ContactForm />
-      </div>
+        <WhatWeDo />
+        <WhatSetsUsApart />
+        <ServicesSection />
+        <AboutSection />
+        <Testimonials />
+      </main>
+
+      <Footer />
     </div>
   );
 };
