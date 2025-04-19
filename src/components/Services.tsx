@@ -97,7 +97,9 @@ export const ServicesSection = () => {
               </CardContent>
               <CardFooter className="pt-2">
                 <Link to={`/services/${service.id}`} className="w-full">
-                  <Button variant="outline" className="w-full border-boniean-orange/50 text-boniean-orange hover:bg-boniean-orange hover:text-white">
+                  <Button 
+                    className="w-full bg-transparent border-2 border-boniean-orange text-boniean-orange hover:bg-boniean-orange hover:text-white transition-colors"
+                  >
                     Learn More
                   </Button>
                 </Link>
@@ -110,7 +112,7 @@ export const ServicesSection = () => {
           <Link to="/services">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-boniean-orange to-boniean-orange-bright hover:from-boniean-orange-bright hover:to-boniean-orange"
+              className="bg-boniean-orange hover:bg-boniean-orange-bright text-white transition-colors"
             >
               View All Services
             </Button>

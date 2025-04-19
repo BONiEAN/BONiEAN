@@ -1,8 +1,14 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CheckCircle, Users, Award, Lightbulb, Target } from "lucide-react";
+import { useEffect } from "react";
 
 const About = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-boniean-dark-charcoal">
       <Navbar />
@@ -28,12 +34,12 @@ const About = () => {
                 <h2 className="text-3xl font-bold text-white mb-6">Our Story</h2>
                 <div className="prose prose-invert max-w-none">
                   <p className="text-lg text-gray-300 mb-4">
-                    BONiEAN was founded in 2020 by a team of experienced engineers and consultants with a shared vision: 
+                    BONiEAN was founded by a team of experienced engineers and consultants with a shared vision: 
                     to help businesses harness the power of artificial intelligence and cloud technologies to solve complex 
                     challenges and drive innovation.
                   </p>
                   <p className="text-lg text-gray-300 mb-4">
-                    What began as a small consultancy has grown into a trusted partner for businesses across various industries, 
+                    We've grown into a trusted partner for businesses across various industries, 
                     from startups to enterprise organizations. Our team combines deep technical expertise with business acumen 
                     to deliver solutions that not only solve immediate problems but also position our clients for long-term success.
                   </p>
@@ -175,8 +181,8 @@ const About = () => {
         </section>
 
         {/* Our Achievements */}
-        <section className="py-16 bg-boniean-dark-charcoal">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="our-collective-experience" className="py-16 bg-boniean-dark-charcoal">
+          <div id="our-collective-experience-top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-white">Our Collective Experience</h2>
               <p className="mt-4 text-xl text-gray-300">
@@ -217,7 +223,7 @@ const About = () => {
                 <h3 className="text-2xl font-semibold text-white mb-6">Enterprise Consulting</h3>
                 <div className="prose prose-invert max-w-none">
                   <p className="text-lg text-gray-300">
-                    Our experience at Accenture includes architecting secure document distribution portals, leading cloud migrations, and implementing FinOps strategies that reduced infrastructure costs by 40%. We've facilitated stakeholder workshops to define technical requirements, delivered architectural roadmaps, and managed diverse technical teams across DevOps, infrastructure, and automation projects, ensuring seamless delivery while maintaining security and compliance.
+                    Our experience includes architecting secure document distribution portals, leading cloud migrations, and implementing cost optimization strategies. We've facilitated stakeholder workshops to define technical requirements, delivered architectural roadmaps, and managed diverse technical teams across DevOps, infrastructure, and automation projects, ensuring seamless delivery while maintaining security and compliance.
                   </p>
                 </div>
               </div>
@@ -235,7 +241,7 @@ const About = () => {
                 <h3 className="text-2xl font-semibold text-white mb-6">Software Engineering Leadership</h3>
                 <div className="prose prose-invert max-w-none">
                   <p className="text-lg text-gray-300">
-                    We've led high-visibility projects at organizations like AWS, NVIDIA, and TrendMicro, designing everything from low-latency RPC frameworks to intelligent ETL pipelines and real-time analytics dashboards. Our work has consistently reduced processing times, improved accuracy, and delivered measurable business value.
+                    We've led high-visibility projects at organizations like AWS, NVIDIA, Accenture, and TrendMicro, designing everything from low-latency RPC frameworks to intelligent ETL pipelines and real-time analytics dashboards. Our work has consistently reduced processing times, improved accuracy, and delivered measurable business value.
                   </p>
                 </div>
               </div>

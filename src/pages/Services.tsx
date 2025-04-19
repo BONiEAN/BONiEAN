@@ -4,8 +4,14 @@ import { services } from "@/components/Services";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Services = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-boniean-dark-charcoal">
       <Navbar />
@@ -52,7 +58,9 @@ const Services = () => {
                   </CardContent>
                   <CardFooter className="pt-2">
                     <Link to={`/services/${service.id}`} className="w-full">
-                      <Button variant="outline" className="w-full border-boniean-orange/50 text-boniean-orange hover:bg-boniean-orange hover:text-white">
+                      <Button 
+                        className="w-full bg-boniean-orange text-white hover:bg-boniean-orange-bright transition-colors duration-300"
+                      >
                         Learn More
                       </Button>
                     </Link>

@@ -3,6 +3,10 @@ import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
 
 export const WhatWeDo = () => {
+  const handleClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <section className="py-20 bg-boniean-charcoal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,10 +20,10 @@ export const WhatWeDo = () => {
               deliver measurable results.
             </p>
             <div className="mt-8">
-              <Link to="/about">
+              <Link to="/about" onClick={handleClick}>
                 <Button 
                   variant="outline" 
-                  className="border-boniean-orange text-boniean-orange hover:bg-boniean-orange hover:text-white transition-colors group"
+                  className="border-boniean-orange text-boniean-orange hover:bg-boniean-orange hover:text-white transition-colors group bg-transparent"
                 >
                   Learn More About Us
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

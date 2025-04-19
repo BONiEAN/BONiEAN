@@ -50,8 +50,8 @@ export const Navbar = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 pt-safe-top ${
       isScrolled 
-        ? 'bg-boniean-dark-charcoal/90 backdrop-blur-lg shadow-md' 
-        : 'bg-boniean-dark-charcoal/40 backdrop-blur-sm'
+        ? 'bg-boniean-dark-charcoal/60 backdrop-blur-lg shadow-md' 
+        : 'bg-boniean-dark-charcoal/30 backdrop-blur-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -88,12 +88,6 @@ export const Navbar = () => {
               Our Services
             </Link>
             <Link 
-              to="/clients" 
-              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/clients' ? 'text-boniean-orange' : ''}`}
-            >
-              Our Clients
-            </Link>
-            <Link 
               to="/contact" 
               className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/contact' ? 'text-boniean-orange' : ''}`}
             >
@@ -115,7 +109,7 @@ export const Navbar = () => {
       </div>
 
       <div 
-        className={`fixed top-0 right-0 h-screen w-64 bg-boniean-dark-charcoal/80 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} pt-safe-top`}
+        className={`fixed top-0 right-0 h-screen w-64 bg-boniean-dark-charcoal/50 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} pt-safe-top`}
       >
         <div className="flex justify-end p-4">
           <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
@@ -146,14 +140,6 @@ export const Navbar = () => {
             onClick={closeMobileMenu}
           >
             Our Services
-          </Link>
-          
-          <Link 
-            to="/clients" 
-            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
-            onClick={closeMobileMenu}
-          >
-            Our Clients
           </Link>
           
           <Link 

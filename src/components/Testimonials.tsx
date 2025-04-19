@@ -26,7 +26,11 @@ const testimonials = [
   }
 ];
 
-export const Testimonials = () => {
+interface TestimonialsProps {
+  showTestimonials?: boolean;
+}
+
+export const Testimonials = ({ showTestimonials = false }: TestimonialsProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextTestimonial = () => {
@@ -36,6 +40,11 @@ export const Testimonials = () => {
   const prevTestimonial = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
   };
+
+  // If showTestimonials is false, don't render anything
+  if (!showTestimonials) {
+    return null;
+  }
 
   return (
     <section className="py-24 bg-boniean-dark-charcoal">
