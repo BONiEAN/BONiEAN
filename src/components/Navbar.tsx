@@ -109,7 +109,7 @@ export const Navbar = () => {
       </div>
 
       <div 
-        className={`fixed top-0 right-0 h-screen w-64 bg-boniean-dark-charcoal/50 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} pt-safe-top`}
+        className={`fixed top-0 right-0 h-screen w-64 bg-boniean-dark-charcoal/90 backdrop-blur-md border-l border-boniean-orange/10 shadow-xl md:hidden transform transition-transform duration-300 ease-in-out mobile-menu z-50 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'} pt-safe-top`}
       >
         <div className="flex justify-end p-4">
           <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
