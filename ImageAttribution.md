@@ -74,3 +74,43 @@ All Unsplash photos are free to use under the [Unsplash License](https://unsplas
 - You can use Unsplash photos for free for commercial and non-commercial purposes
 - Attribution is not required, though appreciated
 - You cannot sell unaltered copies of photos or compile photos from Unsplash to replicate a similar service
+
+10. **Hero Background** (`hero-background.jpg`)
+   - Source: Unsplash
+   - License: Unsplash License
+   - URL: https://unsplash.com/photos/blue-and-purple-cosmic-sky-1550751827-4bd374c3f58b
+   - Photographer: NASA
+
+## Client Logos
+
+The following client logos are used for demonstration purposes and are sourced from SVGPorn (https://svgporn.com/):
+
+1. **AWS** (`client-logos/aws.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#aws
+
+2. **Google Cloud** (`client-logos/google-cloud.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#google-cloud
+
+3. **Microsoft** (`client-logos/microsoft.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#microsoft
+
+4. **IBM** (`client-logos/ibm.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#ibm
+
+5. **Salesforce** (`client-logos/salesforce.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#salesforce
+
+6. **Adobe** (`client-logos/adobe.svg`)
+   - Source: SVGPorn
+   - License: Free to use
+   - URL: https://svgporn.com/#adobe
