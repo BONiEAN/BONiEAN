@@ -180,7 +180,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* Our Achievements */}
+        {/* Our Collective Experience */}
         <section id="our-collective-experience" className="py-16 bg-boniean-dark-charcoal">
           <div id="our-collective-experience-top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -260,6 +260,37 @@ const About = () => {
               <p className="text-lg text-gray-300">
                 Together, we bring a track record of transforming complex problems into elegant, data-driven, and scalable solutions. Whether you're building an AI-powered product, modernizing cloud infrastructure, or seeking strategic technology guidance, our team is ready to partner with you at every step of the journey.
               </p>
+            </div>
+          </div>
+
+          {/* Client Logos */}
+          <div className="py-16 bg-boniean-charcoal">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl font-bold text-white">Trusted By Industry Leaders</h2>
+                <p className="mt-3 text-gray-300">We've worked with some of the world's most innovative companies</p>
+              </div>
+              
+              <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
+                {[
+                  { id: 1, name: "AWS", logo: "/lovable-uploads/client-logos/aws.svg" },
+                  { id: 4, name: "IBM", logo: "/lovable-uploads/client-logos/ibm.svg" },
+                  { id: 5, name: "Nvidia", logo: "/lovable-uploads/client-logos/Nvidia_logo.svg" },
+                  { id: 6, name: "Trend Micro", logo: "/lovable-uploads/client-logos/Trend_Micro_logo.svg" },
+                  { id: 7, name: "Accenture", logo: "/lovable-uploads/client-logos/Accenture.svg" },
+                ].map((client) => (
+                  <div 
+                    key={client.id} 
+                    className="h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-all duration-300"
+                  >
+                    <img 
+                      src={client.logo} 
+                      alt={client.name} 
+                      className="h-12 w-auto max-w-[150px] object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
