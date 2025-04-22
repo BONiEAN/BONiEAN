@@ -75,19 +75,19 @@ const featuredServices = [
     id: "ai-machine-learning",
     title: "AI & Machine Learning",
     description: "Custom AI solutions and ML model deployment for enterprise applications",
-    image: "public/lovable-uploads/ai-machine-learning.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/ai-machine-learning.jpg", // Replace with the actual image path
   },
   {
     id: "technical-auditing",
     title: "Technical Auditing",
     description: "Expert evaluation of technical proposals for accuracy, feasibility, and value",
-    image: "public/lovable-uploads/carlos-muza-hpjSkU2UYSU-unsplash.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/carlos-muza-hpjSkU2UYSU-unsplash.jpg", // Replace with the actual image path
   },
   {
     id: "cloud-solution-deployment",
     title: "Cloud solutions & Deployment",
     description: "Comprehensive cloud solutions and automated deployment strategies for modern businesses",
-    image: "public/lovable-uploads/cloud-solution-deployment.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/cloud-solution-deployment.jpg", // Replace with the actual image path
   },
 ];
 

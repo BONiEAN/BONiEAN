@@ -9,7 +9,7 @@ export const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center -z-10"
         style={{
-          backgroundImage: "url('public/lovable-uploads/mitchell-luo-FWoq_ldWlNQ-unsplash.jpg')", // Replace with the correct path to the attached image
+          backgroundImage: "url('/lovable-uploads/mitchell-luo-FWoq_ldWlNQ-unsplash.jpg')", // Replace with the correct path to the attached image
         }}
       >
         {/* Optional overlay for better text visibility */}
