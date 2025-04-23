@@ -277,7 +277,9 @@ const About = () => {
                   { id: 4, name: "IBM", logo: "/lovable-uploads/client-logos/ibm.svg" },
                   { id: 5, name: "Nvidia", logo: "/lovable-uploads/client-logos/Nvidia_logo.svg" },
                   { id: 6, name: "Trend Micro", logo: "/lovable-uploads/client-logos/Trend_Micro_logo.svg" },
+                  { id: 9, name: "Volvo", logo: "/lovable-uploads/client-logos/volvo.svg" },
                   { id: 7, name: "Accenture", logo: "/lovable-uploads/client-logos/Accenture.svg" },
+                  { id: 8, name: "AMD", logo: "/lovable-uploads/client-logos/AMD_Logo.svg" }
                 ].map((client) => (
                   <div 
                     key={client.id} 
