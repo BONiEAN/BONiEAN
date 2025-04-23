@@ -25,10 +25,22 @@ const clients = [
     logo: "/lovable-uploads/client-logos/Trend_Micro_logo.svg",
   },
   {
+    id: 9,
+    name: "volvo",
+    logo: "/lovable-uploads/client-logos/volvo.svg",
+  },
+  {
     id: 7,
     name: "Accenture",
     logo: "/lovable-uploads/client-logos/Accenture.svg",
-  }
+  },
+  
+  {
+    id: 8,
+    name: "AMD",
+    logo: "/lovable-uploads/client-logos/AMD_Logo.svg",
+  },
+  
 ];
 
 export const ClientLogos = () => {
