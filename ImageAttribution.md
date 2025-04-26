@@ -74,3 +74,18 @@ All Unsplash photos are free to use under the [Unsplash License](https://unsplas
 - You can use Unsplash photos for free for commercial and non-commercial purposes
 - Attribution is not required, though appreciated
 - You cannot sell unaltered copies of photos or compile photos from Unsplash to replicate a similar service
+
+## About Page Images
+
+1. **Modern Workspace** (`modern-workspace.jpg`)
+   - Source: Unsplash
+   - License: Unsplash License
+   - URL: https://unsplash.com/photos/macbook-pro-on-brown-wooden-table-497215728101-856f4ea42174
+   - Photographer: Nastuh Abootalebi
+
+
+2. **Home About Section** (`clean-workspace-2.jpg`)
+   - Source: Unsplash
+   - License: Unsplash License
+   - URL: https://unsplash.com/photos/plants-near-pathway-EDPOqCAB3kk
+   - Photographer: Charlie Firth

@@ -53,13 +53,9 @@ const About = () => {
                 <div className="absolute -inset-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright opacity-20 blur-lg rounded-lg"></div>
                 <div className="relative bg-boniean-dark-charcoal rounded-lg overflow-hidden">
                   <img 
-                    src="/lovable-uploads/team-meeting.jpg" 
-                    alt="BONiEAN Team Meeting" 
+                    src="/lovable-uploads/clean-workspace.jpg" 
+                    alt="Modern workspace environment" 
                     className="w-full h-auto object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop";
-                    }}
                   />
                 </div>
               </div>
@@ -326,13 +322,9 @@ const About = () => {
                 <div className="absolute -inset-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright opacity-20 blur-lg rounded-lg"></div>
                 <div className="relative bg-boniean-dark-charcoal rounded-lg overflow-hidden">
                   <img 
-                    src="/lovable-uploads/project-management.jpg" 
-                    alt="Project Management" 
+                    src="/lovable-uploads/clean-workspace.jpg" 
+                    alt="Clean workspace environment" 
                     className="w-full h-auto object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1000&auto=format&fit=crop";
-                    }}
                   />
                 </div>
               </div>
