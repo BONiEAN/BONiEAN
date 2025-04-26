@@ -12,7 +12,7 @@ export const AboutSection = () => {
               <div className="absolute -inset-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright opacity-20 blur-lg rounded-lg"></div>
               <div className="relative bg-boniean-dark-charcoal rounded-lg overflow-hidden">
                 <img 
-                  src="/lovable-uploads/team-collaboration.jpg" 
+                  src="/lovable-uploads/clean-workspace-2.jpg" 
                   alt="BONiEAN Team" 
                   className="w-full h-auto object-cover rounded-lg opacity-90 hover:opacity-100 transition-opacity"
                   onError={(e) => {
