@@ -12,7 +12,7 @@ The following images are used for service pages and are stored in the `public/lo
    - URL: https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-code-on-it-ieic5Tq8YMk
    - Photographer: Chris Ried
 
-2. **Application Development** (`application-development.jpg`)
+2. **Application Development** (`karl-pawlowicz-QUHuwyNgSA0-unsplash.jpg`)
    - Source: Unsplash
    - License: Unsplash License
    - URL: https://unsplash.com/photos/turned-on-macbook-pro-wit-programming-codes-display-f77Bh3inUpE

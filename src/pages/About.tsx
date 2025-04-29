@@ -53,7 +53,7 @@ const About = () => {
                 <div className="absolute -inset-4 bg-gradient-to-r from-boniean-orange to-boniean-orange-bright opacity-20 blur-lg rounded-lg"></div>
                 <div className="relative bg-boniean-dark-charcoal rounded-lg overflow-hidden">
                   <img 
-                    src="/lovable-uploads/team-meeting.jpg" 
+                    src="/lovable-uploads/clean-workspace.jpg" 
                     alt="BONiEAN Team Meeting" 
                     className="w-full h-auto object-cover rounded-lg"
                     onError={(e) => {
