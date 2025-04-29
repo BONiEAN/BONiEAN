@@ -51,7 +51,7 @@ export const Footer = () => {
                 <Link to="/services/ai-machine-learning" className="text-gray-400 hover:text-boniean-orange transition-colors">AI & Machine Learning</Link>
               </li>
               <li>
-                <Link to="/services/cloud-infrastructure" className="text-gray-400 hover:text-boniean-orange transition-colors">Cloud Infrastructure</Link>
+                <Link to="/services/cloud-solution-deployment" className="text-gray-400 hover:text-boniean-orange transition-colors">Cloud Solutions & Deployment</Link>
               </li>
               <li>
                 <Link to="/services/ci-cd" className="text-gray-400 hover:text-boniean-orange transition-colors">CI/CD</Link>
