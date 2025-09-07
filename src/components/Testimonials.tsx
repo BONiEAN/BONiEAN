@@ -5,24 +5,10 @@ import { Button } from './ui/button';
 const testimonials = [
   {
     id: 1,
-    content: "BONiEAN transformed our approach to data analytics. Their AI solution helped us uncover insights we never knew existed in our data, leading to a 30% increase in operational efficiency.",
-    author: "Sarah Johnson",
-    position: "CTO, TechInnovate",
-    company: "TechInnovate"
-  },
-  {
-    id: 2,
-    content: "The cloud migration strategy developed by BONiEAN was flawless. They understood our complex requirements and delivered a solution that not only met but exceeded our expectations.",
-    author: "Michael Chen",
-    position: "VP of Engineering",
-    company: "DataStream Solutions"
-  },
-  {
-    id: 3,
-    content: "Working with BONiEAN on our DevOps transformation was a game-changer. Their expertise in CI/CD pipelines reduced our deployment time by 70% and significantly improved our code quality.",
-    author: "Emily Rodriguez",
-    position: "Director of Software Development",
-    company: "Nexus Systems"
+    content: "Working with BONiEAN was a great experience. They were highly responsive and adaptive whenever our requirements changed, and they made sure to deliver exactly the customizations we needed. The project was completed ahead of the deadline with great quality. I would confidently recommend their services for anyone looking for a reliable and professional tech partner.",
+    author: "Madhu S Naidu",
+    position: "CTO",
+    company: "AHGroup"
   }
 ];
 

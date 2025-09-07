@@ -20,7 +20,7 @@ const Index = () => {
         <ClientLogos/>
         <ServicesSection />
         <AboutSection />
-        <Testimonials />
+        <Testimonials showTestimonials />
       </main>
 
       <Footer />

@@ -88,6 +88,12 @@ export const Navbar = () => {
               Our Services
             </Link>
             <Link 
+              to="/use-cases" 
+              className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/use-cases' ? 'text-boniean-orange' : ''}`}
+            >
+              Use Cases
+            </Link>
+            <Link 
               to="/contact" 
               className={`text-white hover:text-boniean-orange transition-colors ${location.pathname === '/contact' ? 'text-boniean-orange' : ''}`}
             >
@@ -140,6 +146,14 @@ export const Navbar = () => {
             onClick={closeMobileMenu}
           >
             Our Services
+          </Link>
+          
+          <Link 
+            to="/use-cases" 
+            className="px-3 py-2 text-white hover:text-boniean-orange text-center w-full"
+            onClick={closeMobileMenu}
+          >
+            Use Cases
           </Link>
           
           <Link 
