@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BackgroundGrid } from "@/components/BackgroundGrid";
 import { services } from "@/components/Services";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,8 @@ const Services = () => {
       <main className="pt-28">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-28 bg-[radial-gradient(circle_at_50%_0%,rgba(249,115,22,0.18),transparent_35%),linear-gradient(180deg,#221F26,#17151a)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BackgroundGrid />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">Our Services</h1>
               <p className="mt-6 max-w-3xl mx-auto text-xl text-gray-300">

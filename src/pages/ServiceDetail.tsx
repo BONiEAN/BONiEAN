@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { BackgroundGrid } from "@/components/BackgroundGrid";
 import { services } from "@/components/Services";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle } from "lucide-react";
@@ -44,7 +45,8 @@ const ServiceDetail = () => {
       <main className="pt-28">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-28 bg-[radial-gradient(circle_at_50%_0%,rgba(249,115,22,0.18),transparent_35%),linear-gradient(180deg,#221F26,#17151a)]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BackgroundGrid />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center text-center">
               <div className="h-20 w-20 mb-6 bg-gradient-to-br from-boniean-orange to-boniean-orange-bright rounded-[1.75rem] flex items-center justify-center shadow-2xl shadow-boniean-orange/25">
                 <ServiceIcon className="h-10 w-10 text-white" />
