@@ -32,14 +32,16 @@ export const Testimonials = ({ showTestimonials = false }: TestimonialsProps) =>
   if (!showTestimonials) return null;
 
   return (
-    <section className="py-24 bg-boniean-dark-charcoal overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-28 bg-[#221F26]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(249,115,22,0.14),transparent_34%),radial-gradient(circle_at_20%_100%,rgba(255,255,255,0.08),transparent_28%)]" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">What Our Clients Say</h2>
+          <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">What Our Clients Say</h2>
         </div>
 
-        <div className="flex justify-center">
-          <div className="relative h-[450px] w-[320px] sm:w-[380px]">
+        <div className="relative flex justify-center">
+          <div className="absolute top-16 h-72 w-72 rounded-full bg-boniean-orange/15 blur-3xl" />
+          <div className="relative h-[640px] w-[350px] sm:w-[500px]">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={testimonial.id}

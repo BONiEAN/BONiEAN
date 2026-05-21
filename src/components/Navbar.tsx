@@ -48,19 +48,19 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 pt-safe-top ${
-      isScrolled 
-        ? 'bg-boniean-dark-charcoal/60 backdrop-blur-lg shadow-md' 
-        : 'bg-boniean-dark-charcoal/30 backdrop-blur-sm'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav className="fixed w-full z-50 transition-all duration-300 pt-safe-top">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3">
+        <div className={`flex justify-between items-center h-16 rounded-full border px-4 transition-all duration-300 ${
+          isScrolled
+            ? 'border-white/15 bg-boniean-dark-charcoal/70 shadow-2xl shadow-black/30 backdrop-blur-xl'
+            : 'border-white/10 bg-boniean-dark-charcoal/35 shadow-lg shadow-black/10 backdrop-blur-md'
+        }`}>
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center gap-3">
               <img 
                 src="/lovable-uploads/Boniean_logo.png" 
                 alt="Boniean Digital Solutions Inc." 
-                className="h-16 mt-4" 
+                className="h-14" 
               />
               <span className="text-xl font-semibold bg-gradient-to-r from-boniean-orange to-boniean-orange-bright bg-clip-text text-transparent hidden sm:inline">
                 BONiEAN Digital Solutions

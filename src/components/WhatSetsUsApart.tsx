@@ -20,23 +20,28 @@ const features = [
 
 export const WhatSetsUsApart = () => {
   return (
-    <section className="py-20 bg-boniean-dark-charcoal">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden py-24 bg-gradient-to-b from-[#221F26] via-[#2d2930] to-[#221F26]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(254,198,161,0.16),transparent_34%),radial-gradient(circle_at_100%_70%,rgba(249,115,22,0.12),transparent_30%)]" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">What Sets Us Apart</h2>
+          <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">What Sets Us Apart</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature) => (
             <div 
               key={feature.title} 
-              className="bg-boniean-charcoal p-8 rounded-lg border border-boniean-orange/20 hover:border-boniean-orange/50 transition-all duration-300 hover:shadow-lg hover:shadow-boniean-orange/5"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.055] p-8 shadow-2xl shadow-black/25 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-boniean-orange/50 hover:bg-white/[0.08] hover:shadow-boniean-orange/10"
             >
-              <div className="h-12 w-12 mb-6 bg-gradient-to-br from-boniean-orange to-boniean-orange-bright rounded-lg flex items-center justify-center">
-                <feature.icon className="h-6 w-6 text-white" />
+              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-boniean-orange/10 blur-2xl transition-all duration-500 group-hover:bg-boniean-orange/20" />
+              <div className="relative h-14 w-14 mb-7 rounded-2xl bg-gradient-to-br from-boniean-orange to-boniean-orange-bright p-px shadow-lg shadow-boniean-orange/20">
+                <div className="flex h-full w-full items-center justify-center rounded-2xl bg-[#221F26]/70 backdrop-blur-sm">
+                  <feature.icon className="h-7 w-7 text-boniean-orange" />
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-4">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
+              <h3 className="relative text-xl font-semibold text-white mb-4">{feature.title}</h3>
+              <p className="relative text-gray-300 leading-7">{feature.description}</p>
             </div>
           ))}
         </div>

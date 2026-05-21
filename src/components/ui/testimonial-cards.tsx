@@ -25,8 +25,9 @@ export function TestimonialCard({ testimonial, position, handleShuffle }: Testim
         zIndex: position === "front" ? "2" : position === "middle" ? "1" : "0"
       }}
       animate={{
-        rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
-        x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%"
+        rotate: position === "front" ? "-1.5deg" : position === "middle" ? "0deg" : "1.5deg",
+        x: position === "front" ? "0%" : position === "middle" ? "6%" : "4%",
+        y: position === "front" ? "0%" : "4%"
       }}
       drag={isFront}
       dragElastic={0.35}
@@ -37,17 +38,19 @@ export function TestimonialCard({ testimonial, position, handleShuffle }: Testim
         dragRef.current = 0;
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[420px] w-[320px] sm:h-[450px] sm:w-[380px] select-none place-content-center space-y-6 rounded-2xl border-2 border-boniean-orange/20 bg-boniean-dark-charcoal/60 p-6 sm:p-8 shadow-xl backdrop-blur-md ${
+      className={`absolute left-0 top-0 grid h-[600px] w-[350px] sm:h-[610px] sm:w-[480px] select-none place-content-center space-y-7 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-7 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-9 ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
-      <div className="h-20 w-20 sm:h-24 sm:w-24 mx-auto rounded-full bg-gradient-to-br from-boniean-orange to-boniean-orange-bright flex items-center justify-center text-white font-bold text-2xl sm:text-3xl border-2 border-boniean-orange/30">
+      <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-boniean-orange/15 blur-3xl" />
+      <div className="absolute -left-20 bottom-0 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+      <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-boniean-orange/40 bg-gradient-to-br from-boniean-orange to-boniean-orange-bright text-2xl font-bold text-black shadow-lg shadow-boniean-orange/20 sm:h-24 sm:w-24 sm:text-3xl">
         {testimonial.author.charAt(0)}
       </div>
-      <p className="text-center text-sm sm:text-base italic text-gray-300 leading-relaxed">
+      <p className="relative text-center text-[15px] italic leading-7 text-gray-200 sm:text-base sm:leading-8">
         "{testimonial.content}"
       </p>
-      <div className="text-center">
+      <div className="relative text-center">
         <p className="text-sm font-semibold text-boniean-orange">{testimonial.author}</p>
         <p className="text-xs text-gray-400">{testimonial.position}, {testimonial.company}</p>
       </div>

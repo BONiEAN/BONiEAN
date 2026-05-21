@@ -1,5 +1,4 @@
 import { Brain, Cloud, Container, Cog, ChartNetwork, CloudUpload, ChartScatter, Layout, Building2 } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -75,80 +74,80 @@ const featuredServices = [
     id: "ai-machine-learning",
     title: "AI & Machine Learning",
     description: "Custom AI solutions and ML model deployment for enterprise applications",
-    image: "/lovable-uploads/ai-machine-learning.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/ai-machine-learning.jpg",
   },
   {
     id: "technical-auditing",
     title: "Technical Auditing",
     description: "Expert evaluation of technical proposals for accuracy, feasibility, and value",
-    image: "/lovable-uploads/carlos-muza-hpjSkU2UYSU-unsplash.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/carlos-muza-hpjSkU2UYSU-unsplash.jpg",
   },
   {
     id: "cloud-solution-deployment",
     title: "Cloud solutions & Deployment",
     description: "Comprehensive cloud solutions and automated deployment strategies for modern businesses",
-    image: "/lovable-uploads/cloud-solution-deployment.jpg", // Replace with the actual image path
+    image: "/lovable-uploads/cloud-solution-deployment.jpg",
   },
 ];
 
 export const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 bg-gradient-to-b from-boniean-dark-charcoal to-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Our Services</h2>
+    <section id="services" className="relative overflow-hidden py-28 bg-gradient-to-b from-[#221F26] via-gray-900 to-[#221F26]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_10%,rgba(249,115,22,0.14),transparent_30%),radial-gradient(circle_at_90%_42%,rgba(254,198,161,0.12),transparent_30%)]" />
+      <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:90px_90px]" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Our Services</h2>
           <p className="mt-4 text-xl text-gray-300">
             Comprehensive solutions for modern technology challenges
           </p>
         </div>
 
-        <div className="space-y-24">
+        <div className="space-y-16 lg:space-y-20">
           {featuredServices.map((service, index) => (
             <motion.div
               key={service.id}
-              className={`flex flex-col lg:flex-row items-center gap-12 ${
-                index % 2 === 1 ? "lg:flex-row-reverse" : ""
-              }`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -300 : 300 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
+              className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/30 backdrop-blur-xl lg:p-6"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <motion.div
-                className="flex-shrink-0 w-full lg:w-1/2"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link to={`/services/${service.id}`}>
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="rounded-lg shadow-2xl transform hover:scale-105 transition-transform duration-300"
-                  />
+              <div className="absolute -right-24 -top-24 h-56 w-56 rounded-full bg-boniean-orange/10 blur-3xl transition duration-700 group-hover:bg-boniean-orange/20" />
+              <div className={`relative grid grid-cols-1 items-center gap-8 lg:grid-cols-2 ${
+                index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+              }`}>
+                <Link to={`/services/${service.id}`} className="block">
+                  <div className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/30 shadow-2xl shadow-black/30">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-white/5" />
+                  </div>
                 </Link>
-              </motion.div>
-              <div className="text-center lg:text-left w-full lg:w-1/2">
-                <h3 className="text-3xl font-bold text-white">{service.title}</h3>
-                <p className="mt-4 text-lg text-gray-300">{service.description}</p>
-                <Link to={`/services/${service.id}`} className="inline-block mt-6">
-                  <motion.button
-                    className="px-8 py-4 bg-boniean-orange text-white font-semibold rounded-lg hover:bg-boniean-orange-bright transition-colors shadow-lg"
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    Learn More
-                  </motion.button>
-                </Link>
+
+                <div className="px-2 py-4 text-center lg:px-8 lg:text-left">
+                  <h3 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h3>
+                  <p className="mt-5 text-lg leading-8 text-gray-300">{service.description}</p>
+                  <Link to={`/services/${service.id}`} className="inline-block mt-8">
+                    <Button
+                      className="rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 px-8 py-6 font-semibold text-black shadow-lg shadow-boniean-orange/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-orange-600 hover:to-yellow-600"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="mt-24 text-center">
+        <div className="mt-20 text-center">
           <Link to="/services">
             <motion.button
-              className="px-10 py-4 bg-boniean-orange text-white font-bold text-lg rounded-lg hover:bg-boniean-orange-bright transition-colors shadow-lg"
-              whileHover={{ scale: 1.1 }}
+              className="rounded-full border border-white/15 bg-white/10 px-10 py-4 text-lg font-bold text-boniean-orange shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:border-boniean-orange/60 hover:bg-boniean-orange hover:text-black"
+              whileHover={{ y: -2 }}
               transition={{ duration: 0.3 }}
             >
               View All Services
