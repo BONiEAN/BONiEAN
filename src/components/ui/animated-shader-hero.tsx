@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 interface HeroProps {
   trustBadge?: { text: string; icons?: string[] };
@@ -18,7 +18,39 @@ const Hero: React.FC<HeroProps> = ({
   buttons,
   className = ""
 }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+
+  const attemptPlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Mobile Safari is picky. Set these imperatively before play(),
+    // not only as JSX attributes, so autoplay stays inline + muted.
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.controls = false;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('disablepictureinpicture', '');
+    video.setAttribute('controlslist', 'nodownload noplaybackrate noremoteplayback');
+
+    const playPromise = video.play();
+    if (playPromise) {
+      playPromise.catch(() => {
+        // If iOS Low Power Mode blocks autoplay, keep the video hidden instead
+        // of showing Safari's ugly native play button over the hero.
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    attemptPlay();
+    const retry = window.setTimeout(attemptPlay, 300);
+    return () => window.clearTimeout(retry);
+  }, [attemptPlay]);
 
   return (
     <div className={`relative w-full h-screen overflow-hidden bg-black ${className}`}>
@@ -37,16 +69,34 @@ const Hero: React.FC<HeroProps> = ({
         .animation-delay-400 { animation-delay: 0.4s; }
         .animation-delay-600 { animation-delay: 0.6s; }
         .animation-delay-800 { animation-delay: 0.8s; }
+
+        #boniean-hero-video::-webkit-media-controls,
+        #boniean-hero-video::-webkit-media-controls-panel,
+        #boniean-hero-video::-webkit-media-controls-play-button,
+        #boniean-hero-video::-webkit-media-controls-start-playback-button {
+          display: none !important;
+          -webkit-appearance: none !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
       `}</style>
 
       <video
+        ref={videoRef}
+        id="boniean-hero-video"
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
-        onCanPlay={() => setVideoReady(true)}
-        className="absolute inset-0 w-full h-full object-cover"
+        controls={false}
+        disablePictureInPicture
+        controlsList="nodownload noplaybackrate noremoteplayback"
+        onLoadedMetadata={attemptPlay}
+        onLoadedData={attemptPlay}
+        onCanPlay={attemptPlay}
+        onPlaying={() => setVideoReady(true)}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
       >
         <source src="/boniean-shader-loop.mp4" type="video/mp4" />
         <source src="/boniean-shader-loop.webm" type="video/webm" />
