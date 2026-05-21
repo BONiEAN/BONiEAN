@@ -8,15 +8,15 @@ const PrivacyPolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-boniean-dark-charcoal">
+    <div className="min-h-screen bg-[#221F26]">
       <Navbar />
       
-      <main className="pt-24 pb-16">
+      <main className="relative overflow-hidden pt-32 pb-20 bg-[radial-gradient(circle_at_50%_0%,rgba(249,115,22,0.14),transparent_34%),linear-gradient(180deg,#221F26,#17151a_40%,#221F26)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-boniean-dark-charcoal/80 backdrop-blur-sm rounded-lg shadow-xl border border-boniean-orange/20 p-8">
-            <h1 className="text-3xl font-bold text-white mb-8 text-center">Privacy Policy</h1>
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.055] p-6 shadow-2xl shadow-black/35 backdrop-blur-xl sm:p-8">
+            <h1 className="text-4xl font-extrabold tracking-tight text-white mb-8 text-center sm:text-5xl">Privacy Policy</h1>
             
-            <div className="prose prose-invert max-w-none">
+            <div className="prose prose-invert max-w-none prose-p:leading-7 prose-li:leading-7">
               <p className="text-gray-300 mb-6 text-left">
                 Last Updated: {new Date().toLocaleDateString()}
               </p>
