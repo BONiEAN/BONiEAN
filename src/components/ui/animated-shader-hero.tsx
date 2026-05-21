@@ -122,7 +122,7 @@ const Hero: React.FC<HeroProps> = ({
         onPlaying={() => setVideoReady(true)}
         onEnded={restartLoop}
         onTimeUpdate={keepLoopAlive}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 w-full h-full object-cover brightness-[0.82] saturate-[0.95] transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
       >
         <source src="/boniean-shader-loop.mp4" type="video/mp4" />
         <source src="/boniean-shader-loop.webm" type="video/webm" />
@@ -154,15 +154,15 @@ const Hero: React.FC<HeroProps> = ({
                   {(() => {
                     const words = headline.line1.split(' ');
                     const last = words.pop();
-                    return <>{words.join(' ')} <span className="text-amber-900">{last}</span></>;
+                    return <>{words.join(' ')} <span className="text-amber-900 drop-shadow-[0_2px_14px_rgba(255,255,255,0.35)]">{last}</span></>;
                   })()}
                 </h1>
-                <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-amber-900 animate-fade-in-up animation-delay-400">
+                <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-amber-900 drop-shadow-[0_2px_14px_rgba(255,255,255,0.35)] animate-fade-in-up animation-delay-400">
                   {headline.line2}
                 </h1>
               </div>
               <div className="max-w-3xl mx-auto animate-fade-in-up animation-delay-600">
-                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-black font-light leading-relaxed">{subtitle}</p>
+                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-black font-normal leading-relaxed drop-shadow-[0_1px_10px_rgba(255,255,255,0.45)]">{subtitle}</p>
               </div>
             </div>
           </div>
