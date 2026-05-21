@@ -88,6 +88,14 @@ export default {
           '0%': { backgroundPosition: '100% 100%' },
           '100%': { backgroundPosition: '0% 0%' },
         },
+        "fade-in-down": {
+          from: { opacity: "0", transform: "translateY(-20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "shader-fade-up": {
+          from: { opacity: "0", transform: "translateY(30px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
         gradient: {
           '0%': { backgroundPosition: '0% 50%' },
           '25%': { backgroundPosition: '50% 100%' },
@@ -104,6 +112,8 @@ export default {
         "float-delayed": "float 7s ease-in-out infinite 1s",
         "shimmer": "shimmer 3s linear infinite",
         "gradient": "gradient 15s ease infinite",
+        "fade-in-down": "fade-in-down 0.8s ease-out both",
+        "shader-fade-up": "shader-fade-up 0.8s ease-out both",
       },
     },
   },
