@@ -46,6 +46,30 @@ const Hero: React.FC<HeroProps> = ({
     }
   }, []);
 
+  const restartLoop = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // iOS Safari can fail to honor the native loop attribute for large
+    // inline autoplay videos. Force the loop manually so it never parks on
+    // the final frame with a play button.
+    try {
+      video.currentTime = 0.05;
+    } catch {
+      video.load();
+    }
+    attemptPlay();
+  }, [attemptPlay]);
+
+  const keepLoopAlive = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 1) return;
+
+    if (video.currentTime >= video.duration - 0.35) {
+      restartLoop();
+    }
+  }, [restartLoop]);
+
   useEffect(() => {
     attemptPlay();
     const retry = window.setTimeout(attemptPlay, 300);
@@ -96,6 +120,8 @@ const Hero: React.FC<HeroProps> = ({
         onLoadedData={attemptPlay}
         onCanPlay={attemptPlay}
         onPlaying={() => setVideoReady(true)}
+        onEnded={restartLoop}
+        onTimeUpdate={keepLoopAlive}
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
       >
         <source src="/boniean-shader-loop.mp4" type="video/mp4" />
