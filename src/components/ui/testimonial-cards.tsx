@@ -16,8 +16,14 @@ interface TestimonialCardProps {
 }
 
 export function TestimonialCard({ testimonial, position, handleShuffle }: TestimonialCardProps) {
-  const dragRef = React.useRef(0);
   const isFront = position === "front";
+
+  const handleDragEnd = (_: any, info: { offset: { x: number; y: number } }) => {
+    // Light touch: 50px horizontal swipe in either direction flips the card
+    if (Math.abs(info.offset.x) > 50) {
+      handleShuffle();
+    }
+  };
 
   return (
     <motion.div
@@ -29,15 +35,12 @@ export function TestimonialCard({ testimonial, position, handleShuffle }: Testim
         x: position === "front" ? "0%" : position === "middle" ? "6%" : "4%",
         y: position === "front" ? "0%" : "4%"
       }}
-      drag={isFront}
-      dragElastic={0.35}
-      dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-      onDragStart={(e: any) => { dragRef.current = e.clientX; }}
-      onDragEnd={(e: any) => {
-        if (dragRef.current - e.clientX > 150) handleShuffle();
-        dragRef.current = 0;
-      }}
-      transition={{ duration: 0.35 }}
+      drag={isFront ? "x" : false}
+      dragElastic={0.1}
+      dragSnapToOrigin
+      onDragEnd={handleDragEnd}
+      whileDrag={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
       className={`absolute left-0 top-0 grid h-[600px] w-[350px] sm:h-[610px] sm:w-[480px] select-none place-content-center space-y-7 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.07] p-7 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-9 ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
