@@ -9,18 +9,46 @@ interface HeroProps {
     secondary?: { text: string; onClick?: () => void };
   };
   className?: string;
+  /** Tells the outer gate the video has enough buffered data to reveal the hero. */
+  onVideoReady?: () => void;
+  /** Lets the outer gate reveal text immediately if media readiness times out. */
+  forceShowContent?: boolean;
 }
+
+const HAVE_FUTURE_DATA = 3;
 
 const Hero: React.FC<HeroProps> = ({
   trustBadge,
   headline,
   subtitle,
   buttons,
-  className = ""
+  className = "",
+  onVideoReady,
+  forceShowContent,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const gateReadySentRef = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
+
+  const markVideoUsable = useCallback(() => {
+    setVideoReady(true);
+    setShowContent(true);
+
+    if (!gateReadySentRef.current) {
+      gateReadySentRef.current = true;
+      onVideoReady?.();
+    }
+  }, [onVideoReady]);
+
+  const syncVideoReadiness = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.readyState >= HAVE_FUTURE_DATA) {
+      markVideoUsable();
+    }
+  }, [markVideoUsable]);
 
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
@@ -71,16 +99,51 @@ const Hero: React.FC<HeroProps> = ({
     }
   }, [restartLoop]);
 
+  const handleLoadedMetadata = useCallback(() => {
+    attemptPlay();
+    syncVideoReadiness();
+  }, [attemptPlay, syncVideoReadiness]);
+
+  const handleLoadedData = useCallback(() => {
+    attemptPlay();
+    syncVideoReadiness();
+  }, [attemptPlay, syncVideoReadiness]);
+
+  const handleCanPlay = useCallback(() => {
+    markVideoUsable();
+    attemptPlay();
+  }, [attemptPlay, markVideoUsable]);
+
+  const handlePlaying = useCallback(() => {
+    markVideoUsable();
+  }, [markVideoUsable]);
+
+  useEffect(() => {
+    if (forceShowContent) {
+      setShowContent(true);
+    }
+  }, [forceShowContent]);
+
   useEffect(() => {
     attemptPlay();
-    const retry = window.setTimeout(attemptPlay, 300);
+    syncVideoReadiness();
+
+    const retry = window.setTimeout(() => {
+      attemptPlay();
+      syncVideoReadiness();
+    }, 300);
+    const readinessPoll = window.setInterval(syncVideoReadiness, 250);
+    const stopReadinessPoll = window.setTimeout(() => window.clearInterval(readinessPoll), 6000);
     // Fallback: show content after 4s even if video hasn't loaded (mobile/slow connections)
     const fallback = window.setTimeout(() => setShowContent(true), 4000);
+
     return () => {
       window.clearTimeout(retry);
+      window.clearInterval(readinessPoll);
+      window.clearTimeout(stopReadinessPoll);
       window.clearTimeout(fallback);
     };
-  }, [attemptPlay]);
+  }, [attemptPlay, syncVideoReadiness]);
 
   return (
     <div className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}>
@@ -122,10 +185,10 @@ const Hero: React.FC<HeroProps> = ({
         controls={false}
         disablePictureInPicture
         controlsList="nodownload noplaybackrate noremoteplayback"
-        onLoadedMetadata={attemptPlay}
-        onLoadedData={attemptPlay}
-        onCanPlay={attemptPlay}
-        onPlaying={() => { setVideoReady(true); setShowContent(true); }}
+        onLoadedMetadata={handleLoadedMetadata}
+        onLoadedData={handleLoadedData}
+        onCanPlay={handleCanPlay}
+        onPlaying={handlePlaying}
         onEnded={restartLoop}
         onTimeUpdate={keepLoopAlive}
         className={`absolute inset-0 w-full h-full object-cover brightness-[0.82] saturate-[0.95] transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
