@@ -60,9 +60,9 @@ export const Navbar = () => {
               <img 
                 src="/lovable-uploads/Boniean_logo.png" 
                 alt="Boniean Digital Solutions Inc." 
-                className="h-14" 
+                className="h-10 sm:h-14" 
               />
-              <span className="text-xl font-semibold bg-gradient-to-r from-boniean-orange to-boniean-orange-bright bg-clip-text text-transparent hidden sm:inline">
+              <span className="font-semibold bg-gradient-to-r from-boniean-orange to-boniean-orange-bright bg-clip-text text-transparent text-xs sm:text-xl whitespace-nowrap">
                 BONiEAN Digital Solutions
               </span>
             </Link>
