@@ -20,6 +20,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
@@ -73,11 +74,16 @@ const Hero: React.FC<HeroProps> = ({
   useEffect(() => {
     attemptPlay();
     const retry = window.setTimeout(attemptPlay, 300);
-    return () => window.clearTimeout(retry);
+    // Fallback: show content after 4s even if video hasn't loaded (mobile/slow connections)
+    const fallback = window.setTimeout(() => setShowContent(true), 4000);
+    return () => {
+      window.clearTimeout(retry);
+      window.clearTimeout(fallback);
+    };
   }, [attemptPlay]);
 
   return (
-    <div className={`relative w-full h-screen overflow-hidden bg-black ${className}`}>
+    <div className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}>
       <style>{`
         @keyframes fade-in-down {
           from { opacity: 0; transform: translateY(-20px); }
@@ -119,7 +125,7 @@ const Hero: React.FC<HeroProps> = ({
         onLoadedMetadata={attemptPlay}
         onLoadedData={attemptPlay}
         onCanPlay={attemptPlay}
-        onPlaying={() => setVideoReady(true)}
+        onPlaying={() => { setVideoReady(true); setShowContent(true); }}
         onEnded={restartLoop}
         onTimeUpdate={keepLoopAlive}
         className={`absolute inset-0 w-full h-full object-cover brightness-[0.82] saturate-[0.95] transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
@@ -128,7 +134,7 @@ const Hero: React.FC<HeroProps> = ({
         <source src="/boniean-shader-loop.webm" type="video/webm" />
       </video>
 
-      {videoReady && (
+      {showContent && (
         <div className="absolute inset-0 z-10 flex flex-col items-center text-white">
           {/* Badge — pinned to top */}
           {trustBadge && (
