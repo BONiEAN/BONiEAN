@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Boniean3DLogo } from './boniean-3d-logo';
 
 type GateOpenReason = 'ready' | 'timeout';
 
@@ -179,9 +180,9 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
               <div className="absolute inset-3 rounded-full border border-white/10" />
               <div className="absolute h-px w-[190vw] origin-center bg-gradient-to-r from-transparent via-orange-400/55 to-transparent" style={{ animation: 'gate-line-arm 700ms ease-out 280ms both' }} />
               <div className="absolute h-[190vw] w-px origin-center bg-gradient-to-b from-transparent via-orange-300/15 to-transparent" />
-              <span className="relative text-5xl font-black tracking-tight text-white drop-shadow-[0_0_28px_rgba(249,115,22,0.50)]" style={{ animation: 'gate-logo-lock 760ms ease-out both' }}>
-                B
-              </span>
+              <div className="absolute inset-2 z-10">
+                <Boniean3DLogo speed={0.45} style={{ width: '100%', height: '100%' }} />
+              </div>
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/12 to-transparent" style={{ animation: 'gate-scan 1.25s ease-in-out 250ms both' }} />
             </div>
 
