@@ -8,12 +8,6 @@ interface AnimatedGateProps {
   sessionKey?: string;
   alwaysShow?: boolean;
   ready?: boolean;
-  /**
-   * When true, the gate behaves as a real media preloader: it only opens after
-   * `ready` becomes true. The max-wait timer no longer reveals the hero,
-   * because showing copy over a blank fallback is worse than waiting.
-   */
-  openOnlyWhenReady?: boolean;
   minDisplayMs?: number;
   maxWaitMs?: number;
   openAnimationMs?: number;
@@ -39,7 +33,7 @@ const PulseRings: React.FC<{ count?: number }> = ({ count = 3 }) => (
   </div>
 );
 
-/** Floating particle dots around the center lockup */
+/** Floating particle dots around the logo */
 const FloatingParticles: React.FC<{ count?: number }> = ({ count = 20 }) => {
   const particles = useRef(
     Array.from({ length: count }).map(() => ({
@@ -95,7 +89,6 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
   sessionKey = 'boniean-gate-seen',
   alwaysShow = false,
   ready = false,
-  openOnlyWhenReady = false,
   minDisplayMs = 900,
   maxWaitMs = 4200,
   openAnimationMs = 900,
@@ -106,7 +99,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
     new URLSearchParams(window.location.search).has('gateDebug');
 
   const [showGate, setShowGate] = useState(() => {
-    if (alwaysShow || openOnlyWhenReady || debugHoldGate || typeof window === 'undefined') return true;
+    if (alwaysShow || debugHoldGate || typeof window === 'undefined') return true;
     try {
       return window.sessionStorage.getItem(sessionKey) !== 'true';
     } catch {
@@ -127,17 +120,15 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       setOpening(true);
 
       removeTimerRef.current = window.setTimeout(() => {
-        if (!openOnlyWhenReady) {
-          try {
-            window.sessionStorage.setItem(sessionKey, 'true');
-          } catch {
-            // Private browsing — fine.
-          }
+        try {
+          window.sessionStorage.setItem(sessionKey, 'true');
+        } catch {
+          // Private browsing — fine.
         }
         setShowGate(false);
       }, openAnimationMs + 160);
     },
-    [onOpenStart, openAnimationMs, openOnlyWhenReady, sessionKey]
+    [onOpenStart, openAnimationMs, sessionKey]
   );
 
   useEffect(() => {
@@ -156,10 +147,10 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       openGate('ready');
       return;
     }
-    if (maxElapsed && !openOnlyWhenReady) {
+    if (maxElapsed) {
       openGate('timeout');
     }
-  }, [debugHoldGate, maxElapsed, minElapsed, openGate, openOnlyWhenReady, opening, ready, showGate]);
+  }, [debugHoldGate, maxElapsed, minElapsed, openGate, opening, ready, showGate]);
 
   useEffect(() => {
     return () => {
@@ -176,12 +167,9 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       {showGate && (
         <div
           className="fixed inset-0 z-[9999] overflow-hidden"
-          style={{ opacity: 0.995 }}
           data-boniean-gate="loading"
           data-gate-opening={opening ? 'true' : 'false'}
           data-gate-ready={ready ? 'true' : 'false'}
-          data-gate-strict={openOnlyWhenReady ? 'true' : 'false'}
-          data-gate-max-wait-elapsed={maxElapsed ? 'true' : 'false'}
           aria-hidden="true"
         >
           <style>{`
@@ -204,7 +192,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
               from { transform: translate3d(0, 0, 0); }
               to { transform: translate3d(44px, 44px, 0); }
             }
-            @keyframes gate-brand-lock {
+            @keyframes gate-logo-lock {
               0% { opacity: 0; transform: translateY(12px) scale(0.94); filter: blur(10px); }
               55% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
               100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
@@ -298,13 +286,13 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
                 : 'opacity-100 scale-100 blur-0'
             }`}
           >
-            {/* Pulse rings behind the brand lockup */}
+            {/* Pulse rings behind the logo */}
             <PulseRings count={3} />
 
             {/* Floating particles */}
             <FloatingParticles count={24} />
 
-            {/* ── 3D Logo circle ───────────────────────────── */}
+            {/* Logo circle container */}
             <div
               className="relative flex h-36 w-36 items-center justify-center rounded-full border border-orange-300/30 bg-white/[0.04] backdrop-blur-sm"
               style={{
@@ -347,12 +335,11 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
 
             {/* ── Brand text ──────────────────────────────── */}
             <div
-              className="relative mt-8 text-center"
+              className="mt-8 text-center"
               style={{
-                animation: 'gate-brand-lock 800ms ease-out 150ms both',
+                animation: 'gate-logo-lock 800ms ease-out 150ms both',
               }}
             >
-              <div className="absolute left-1/2 top-1/2 h-28 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/10 blur-3xl" />
               <div className="text-base font-bold uppercase tracking-[0.45em] text-orange-200/90 sm:text-lg">
                 BONiEAN
               </div>

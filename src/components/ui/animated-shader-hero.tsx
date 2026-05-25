@@ -9,18 +9,13 @@ interface HeroProps {
     secondary?: { text: string; onClick?: () => void };
   };
   className?: string;
-  /** Tells the outer gate that the video has enough data to show frames.
-   *  Fires on readyState >= HAVE_CURRENT_DATA.  The gate opens on this,
-   *  so the video becomes visible and autoplay can proceed on iOS. */
-  onVideoDataReady?: () => void;
-  /** Tells the outer gate that actual video playback has started. */
+  /** Tells the outer gate the video has enough buffered data to reveal the hero. */
   onVideoReady?: () => void;
-  /** Lets the outer gate reveal text immediately if media playback times out. */
+  /** Lets the outer gate reveal text immediately if media readiness times out. */
   forceShowContent?: boolean;
 }
 
-const HAVE_CURRENT_DATA = 2;
-const PLAYBACK_RETRY_WINDOW_MS = 45000;
+const HAVE_FUTURE_DATA = 3;
 
 const Hero: React.FC<HeroProps> = ({
   trustBadge,
@@ -28,27 +23,15 @@ const Hero: React.FC<HeroProps> = ({
   subtitle,
   buttons,
   className = "",
-  onVideoDataReady,
   onVideoReady,
   forceShowContent,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const dataReadySentRef = useRef(false);
   const gateReadySentRef = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
-  /**
-   * Called when the video has enough data to paint at least one frame
-   * (readyState >= HAVE_CURRENT_DATA).  This is the signal for the gate
-   * to open — once the video is visible, autoplay can proceed on iOS.
-   */
-  const markVideoDataReady = useCallback(() => {
-    if (dataReadySentRef.current) return;
-    dataReadySentRef.current = true;
-    onVideoDataReady?.();
-  }, [onVideoDataReady]);
-  const markPlaybackStarted = useCallback(() => {
+  const markVideoUsable = useCallback(() => {
     setVideoReady(true);
     setShowContent(true);
 
@@ -58,30 +41,21 @@ const Hero: React.FC<HeroProps> = ({
     }
   }, [onVideoReady]);
 
-  const hasPlaybackStarted = useCallback(() => {
+  const syncVideoReadiness = useCallback(() => {
     const video = videoRef.current;
-    return Boolean(
-      video &&
-        !video.paused &&
-        !video.ended &&
-        video.readyState >= HAVE_CURRENT_DATA
-    );
-  }, []);
+    if (!video) return;
 
-  const syncPlaybackState = useCallback(() => {
-    if (hasPlaybackStarted()) {
-      markPlaybackStarted();
-      return true;
+    if (video.readyState >= HAVE_FUTURE_DATA) {
+      markVideoUsable();
     }
-    return false;
-  }, [hasPlaybackStarted, markPlaybackStarted]);
+  }, [markVideoUsable]);
 
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Mobile Safari is picky. Set these imperatively before every play()
-    // attempt, not only as JSX attributes, so autoplay stays inline + muted.
+    // Mobile Safari is picky. Set these imperatively before play(),
+    // not only as JSX attributes, so autoplay stays inline + muted.
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
@@ -93,50 +67,28 @@ const Hero: React.FC<HeroProps> = ({
     video.setAttribute('controlslist', 'nodownload noplaybackrate noremoteplayback');
 
     const playPromise = video.play();
-    if (playPromise && typeof playPromise.then === 'function') {
-      playPromise
-        .then(() => {
-          // play() resolved, but the video might still be paused
-          // (browser accepted the request, not necessarily rendering frames).
-          // Only mark ready if DOM state confirms real playback.
-          if (!syncPlaybackState()) {
-            // Video not actually playing yet — shield stays up.
-            // The timeupdate/playing events will pick it up shortly.
-          }
-        })
-        .catch(() => {
-          // If iOS Low Power Mode or autoplay policy blocks playback, keep the
-          // video covered by the fallback layer instead of revealing Safari's
-          // ugly native play button over the hero. User gestures below keep
-          // trying to start playback silently.
-          if (!syncPlaybackState()) {
-            setVideoReady(false);
-          }
-        });
-    } else {
-      syncPlaybackState();
+    if (playPromise) {
+      playPromise.catch(() => {
+        // If iOS Low Power Mode blocks autoplay, keep the video hidden instead
+        // of showing Safari's ugly native play button over the hero.
+      });
     }
-  }, [syncPlaybackState]);
-
-  const kickVideo = useCallback(() => {
-    attemptPlay();
-    syncPlaybackState();
-  }, [attemptPlay, syncPlaybackState]);
+  }, []);
 
   const restartLoop = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // iOS Safari can fail to honor the native loop attribute for large inline
-    // autoplay videos. Force the loop manually so it never parks on the final
-    // frame with a play button.
+    // iOS Safari can fail to honor the native loop attribute for large
+    // inline autoplay videos. Force the loop manually so it never parks on
+    // the final frame with a play button.
     try {
       video.currentTime = 0.05;
     } catch {
       video.load();
     }
-    kickVideo();
-  }, [kickVideo]);
+    attemptPlay();
+  }, [attemptPlay]);
 
   const keepLoopAlive = useCallback(() => {
     const video = videoRef.current;
@@ -148,99 +100,53 @@ const Hero: React.FC<HeroProps> = ({
   }, [restartLoop]);
 
   const handleLoadedMetadata = useCallback(() => {
-    kickVideo();
-  }, [kickVideo]);
+    attemptPlay();
+    syncVideoReadiness();
+  }, [attemptPlay, syncVideoReadiness]);
 
   const handleLoadedData = useCallback(() => {
-    markVideoDataReady();
-    kickVideo();
-  }, [kickVideo, markVideoDataReady]);
+    attemptPlay();
+    syncVideoReadiness();
+  }, [attemptPlay, syncVideoReadiness]);
 
   const handleCanPlay = useCallback(() => {
-    // Gate opens when video has data (readyState >= 2), not when playback
-    // starts.  iOS frequently fires canplay then defers autoplay until the
-    // video is visible — by opening the gate here, the video becomes visible
-    // so autoplay can proceed.  The shield covers the gap until actual playback.
-    markVideoDataReady();
-    kickVideo();
-  }, [kickVideo, markVideoDataReady]);
+    markVideoUsable();
+    attemptPlay();
+  }, [attemptPlay, markVideoUsable]);
 
   const handlePlaying = useCallback(() => {
-    syncPlaybackState();
-  }, [syncPlaybackState]);
-
-  const handlePause = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || video.ended) return;
-
-    setVideoReady(false);
-    window.setTimeout(() => {
-      kickVideo();
-    }, 160);
-  }, [kickVideo]);
-
-  const handlePlaybackProgress = useCallback(() => {
-    syncPlaybackState();
-    keepLoopAlive();
-  }, [keepLoopAlive, syncPlaybackState]);
+    markVideoUsable();
+  }, [markVideoUsable]);
 
   useEffect(() => {
     if (forceShowContent) {
       setShowContent(true);
-      kickVideo();
     }
-  }, [forceShowContent, kickVideo]);
+  }, [forceShowContent]);
 
   useEffect(() => {
-    kickVideo();
+    attemptPlay();
+    syncVideoReadiness();
 
-    const retryPlayback = window.setInterval(() => {
-      if (syncPlaybackState()) {
-        window.clearInterval(retryPlayback);
-        return;
-      }
+    const retry = window.setTimeout(() => {
       attemptPlay();
-    }, 500);
-
-    const stopRetrying = window.setTimeout(
-      () => window.clearInterval(retryPlayback),
-      PLAYBACK_RETRY_WINDOW_MS
-    );
-
-    // Fallback: show content after 4s even if video autoplay is blocked
-    // (mobile/slow connections). The fallback layer still hides the native
-    // paused-video play button until real playback starts.
+      syncVideoReadiness();
+    }, 300);
+    const readinessPoll = window.setInterval(syncVideoReadiness, 250);
+    const stopReadinessPoll = window.setTimeout(() => window.clearInterval(readinessPoll), 6000);
+    // Fallback: show content after 4s even if video hasn't loaded (mobile/slow connections)
     const fallback = window.setTimeout(() => setShowContent(true), 4000);
 
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        kickVideo();
-      }
-    };
-
-    window.addEventListener('pageshow', kickVideo);
-    window.addEventListener('focus', kickVideo);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    document.addEventListener('touchstart', kickVideo, { passive: true });
-    document.addEventListener('pointerdown', kickVideo, { passive: true });
-
     return () => {
-      window.clearInterval(retryPlayback);
-      window.clearTimeout(stopRetrying);
+      window.clearTimeout(retry);
+      window.clearInterval(readinessPoll);
+      window.clearTimeout(stopReadinessPoll);
       window.clearTimeout(fallback);
-      window.removeEventListener('pageshow', kickVideo);
-      window.removeEventListener('focus', kickVideo);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.removeEventListener('touchstart', kickVideo);
-      document.removeEventListener('pointerdown', kickVideo);
     };
-  }, [attemptPlay, kickVideo, syncPlaybackState]);
+  }, [attemptPlay, syncVideoReadiness]);
 
   return (
-    <div
-      className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}
-      data-hero-video-ready={videoReady ? 'true' : 'false'}
-    >
+    <div className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}>
       <style>{`
         @keyframes fade-in-down {
           from { opacity: 0; transform: translateY(-20px); }
@@ -257,16 +163,8 @@ const Hero: React.FC<HeroProps> = ({
         .animation-delay-600 { animation-delay: 0.6s; }
         .animation-delay-800 { animation-delay: 0.8s; }
 
-        #boniean-hero-video {
-          pointer-events: none;
-          -webkit-user-select: none;
-          user-select: none;
-        }
-
         #boniean-hero-video::-webkit-media-controls,
-        #boniean-hero-video::-webkit-media-controls-enclosure,
         #boniean-hero-video::-webkit-media-controls-panel,
-        #boniean-hero-video::-webkit-media-controls-overlay-play-button,
         #boniean-hero-video::-webkit-media-controls-play-button,
         #boniean-hero-video::-webkit-media-controls-start-playback-button {
           display: none !important;
@@ -279,8 +177,6 @@ const Hero: React.FC<HeroProps> = ({
       <video
         ref={videoRef}
         id="boniean-hero-video"
-        aria-hidden="true"
-        tabIndex={-1}
         autoPlay
         loop
         muted
@@ -292,32 +188,14 @@ const Hero: React.FC<HeroProps> = ({
         onLoadedMetadata={handleLoadedMetadata}
         onLoadedData={handleLoadedData}
         onCanPlay={handleCanPlay}
-        onPlay={handlePlaying}
         onPlaying={handlePlaying}
-        onPause={handlePause}
         onEnded={restartLoop}
-        onTimeUpdate={handlePlaybackProgress}
-        className="absolute inset-0 h-full w-full object-cover brightness-[0.82] saturate-[0.95]"
+        onTimeUpdate={keepLoopAlive}
+        className={`absolute inset-0 w-full h-full object-cover brightness-[0.82] saturate-[0.95] transition-opacity duration-300 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
       >
-        <source src="/boniean-shader-loop-hevc.mp4" type='video/mp4; codecs="hvc1"' />
         <source src="/boniean-shader-loop.mp4" type="video/mp4" />
         <source src="/boniean-shader-loop.webm" type="video/webm" />
       </video>
-
-      {/* Fallback shield — hides the video until actual playback starts.
-          This prevents Safari's native play button from appearing over
-          a paused video when the gate opens. */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 z-[1] transition-opacity duration-500 ${
-          videoReady ? 'opacity-0' : 'opacity-100'
-        }`}
-        style={{
-          background:
-            'radial-gradient(ellipse at 50% 45%, rgba(249,115,22,0.18) 0%, transparent 48%), ' +
-            'linear-gradient(160deg, #221F26 0%, #17131d 48%, #221F26 100%)',
-        }}
-      />
 
       {showContent && (
         <div className="absolute inset-0 z-10 flex flex-col items-center text-white">

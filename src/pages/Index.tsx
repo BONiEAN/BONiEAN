@@ -11,7 +11,8 @@ import { ClientLogos } from "@/components/ClientLogs";
 import { AnimatedGate } from "@/components/ui/animated-gate";
 
 const Index = () => {
-  const [heroDataReady, setHeroDataReady] = useState(false);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+  const [forceHeroContent, setForceHeroContent] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -19,12 +20,17 @@ const Index = () => {
 
       <main>
         <AnimatedGate
-          ready={heroDataReady}
-          openOnlyWhenReady
+          ready={heroVideoReady}
           minDisplayMs={1000}
+          onOpenStart={(reason) => {
+            if (reason === 'timeout') {
+              setForceHeroContent(true);
+            }
+          }}
         >
           <Hero
-            onVideoDataReady={() => setHeroDataReady(true)}
+            onVideoReady={() => setHeroVideoReady(true)}
+            forceShowContent={forceHeroContent}
           />
         </AnimatedGate>
         <WhatWeDo />
