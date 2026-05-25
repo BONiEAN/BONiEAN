@@ -7,6 +7,12 @@ interface AnimatedGateProps {
   sessionKey?: string;
   alwaysShow?: boolean;
   ready?: boolean;
+  /**
+   * When true, the gate behaves as a real media preloader: it only opens after
+   * `ready` becomes true. The max-wait timer no longer reveals the hero,
+   * because showing copy over a blank fallback is worse than waiting.
+   */
+  openOnlyWhenReady?: boolean;
   minDisplayMs?: number;
   maxWaitMs?: number;
   openAnimationMs?: number;
@@ -88,6 +94,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
   sessionKey = 'boniean-gate-seen',
   alwaysShow = false,
   ready = false,
+  openOnlyWhenReady = false,
   minDisplayMs = 900,
   maxWaitMs = 4200,
   openAnimationMs = 900,
@@ -98,7 +105,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
     new URLSearchParams(window.location.search).has('gateDebug');
 
   const [showGate, setShowGate] = useState(() => {
-    if (alwaysShow || debugHoldGate || typeof window === 'undefined') return true;
+    if (alwaysShow || openOnlyWhenReady || debugHoldGate || typeof window === 'undefined') return true;
     try {
       return window.sessionStorage.getItem(sessionKey) !== 'true';
     } catch {
@@ -119,15 +126,17 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       setOpening(true);
 
       removeTimerRef.current = window.setTimeout(() => {
-        try {
-          window.sessionStorage.setItem(sessionKey, 'true');
-        } catch {
-          // Private browsing — fine.
+        if (!openOnlyWhenReady) {
+          try {
+            window.sessionStorage.setItem(sessionKey, 'true');
+          } catch {
+            // Private browsing — fine.
+          }
         }
         setShowGate(false);
       }, openAnimationMs + 160);
     },
-    [onOpenStart, openAnimationMs, sessionKey]
+    [onOpenStart, openAnimationMs, openOnlyWhenReady, sessionKey]
   );
 
   useEffect(() => {
@@ -146,10 +155,10 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       openGate('ready');
       return;
     }
-    if (maxElapsed) {
+    if (maxElapsed && !openOnlyWhenReady) {
       openGate('timeout');
     }
-  }, [debugHoldGate, maxElapsed, minElapsed, openGate, opening, ready, showGate]);
+  }, [debugHoldGate, maxElapsed, minElapsed, openGate, openOnlyWhenReady, opening, ready, showGate]);
 
   useEffect(() => {
     return () => {
@@ -169,6 +178,8 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
           data-boniean-gate="loading"
           data-gate-opening={opening ? 'true' : 'false'}
           data-gate-ready={ready ? 'true' : 'false'}
+          data-gate-strict={openOnlyWhenReady ? 'true' : 'false'}
+          data-gate-max-wait-elapsed={maxElapsed ? 'true' : 'false'}
           aria-hidden="true"
         >
           <style>{`

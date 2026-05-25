@@ -16,7 +16,7 @@ interface HeroProps {
 }
 
 const HAVE_CURRENT_DATA = 2;
-const PLAYBACK_RETRY_WINDOW_MS = 12000;
+const PLAYBACK_RETRY_WINDOW_MS = 45000;
 
 const Hero: React.FC<HeroProps> = ({
   trustBadge,

@@ -12,7 +12,6 @@ import { AnimatedGate } from "@/components/ui/animated-gate";
 
 const Index = () => {
   const [heroVideoReady, setHeroVideoReady] = useState(false);
-  const [forceHeroContent, setForceHeroContent] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -21,16 +20,11 @@ const Index = () => {
       <main>
         <AnimatedGate
           ready={heroVideoReady}
+          openOnlyWhenReady
           minDisplayMs={1000}
-          onOpenStart={(reason) => {
-            if (reason === 'timeout') {
-              setForceHeroContent(true);
-            }
-          }}
         >
           <Hero
             onVideoReady={() => setHeroVideoReady(true)}
-            forceShowContent={forceHeroContent}
           />
         </AnimatedGate>
         <WhatWeDo />
