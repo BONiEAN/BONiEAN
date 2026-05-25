@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Boniean3DLogo } from './boniean-3d-logo';
 
 type GateOpenReason = 'ready' | 'timeout';
 
@@ -185,9 +186,19 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
         >
           <style>{`
             /* ── Gate keyframes ──────────────────────────── */
+            @keyframes gate-pulse {
+              0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(249,115,22,0.25); }
+              50% { transform: scale(1.04); box-shadow: 0 0 90px rgba(249,115,22,0.4); }
+            }
             @keyframes gate-pulse-ring {
               0% { transform: scale(0.8); opacity: 0.5; }
               100% { transform: scale(2.2); opacity: 0; }
+            }
+            @keyframes gate-scan {
+              0% { transform: translateX(-130%); opacity: 0; }
+              15% { opacity: 1; }
+              85% { opacity: 1; }
+              100% { transform: translateX(130%); opacity: 0; }
             }
             @keyframes gate-grid-drift {
               from { transform: translate3d(0, 0, 0); }
@@ -197,6 +208,11 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
               0% { opacity: 0; transform: translateY(12px) scale(0.94); filter: blur(10px); }
               55% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
               100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+            }
+            @keyframes gate-line-arm {
+              0% { transform: scaleX(0); opacity: 0; }
+              40% { opacity: 1; }
+              100% { transform: scaleX(1); opacity: 1; }
             }
             @keyframes gate-particle-float {
               0%, 100% { transform: translate(0, 0); opacity: 0.3; }
@@ -288,9 +304,50 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
             {/* Floating particles */}
             <FloatingParticles count={24} />
 
+            {/* ── 3D Logo circle ───────────────────────────── */}
+            <div
+              className="relative flex h-36 w-36 items-center justify-center rounded-full border border-orange-300/30 bg-white/[0.04] backdrop-blur-sm"
+              style={{
+                animation: 'gate-pulse 1.8s ease-in-out infinite',
+                boxShadow:
+                  '0 0 80px rgba(249,115,22,0.22), inset 0 0 40px rgba(249,115,22,0.08)',
+              }}
+            >
+              {/* Inner ring accent */}
+              <div className="absolute inset-2.5 rounded-full border border-white/8" />
+              <div className="absolute inset-1 rounded-full border border-orange-400/15" />
+
+              {/* Horizontal scan line */}
+              <div
+                className="absolute h-px w-[200vw] origin-center bg-gradient-to-r from-transparent via-orange-400/50 to-transparent"
+                style={{
+                  animation: 'gate-line-arm 700ms ease-out 280ms both',
+                }}
+              />
+
+              {/* Vertical crosshair line */}
+              <div className="absolute h-[200vw] w-px origin-center bg-gradient-to-b from-transparent via-orange-300/10 to-transparent" />
+
+              {/* 3D logo */}
+              <div className="absolute inset-3 z-10">
+                <Boniean3DLogo
+                  speed={0.45}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              </div>
+
+              {/* Top-down scan shimmer */}
+              <div
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                style={{
+                  animation: 'gate-scan 1.4s ease-in-out 250ms both',
+                }}
+              />
+            </div>
+
             {/* ── Brand text ──────────────────────────────── */}
             <div
-              className="relative text-center"
+              className="relative mt-8 text-center"
               style={{
                 animation: 'gate-brand-lock 800ms ease-out 150ms both',
               }}
