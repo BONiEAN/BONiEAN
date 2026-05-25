@@ -21,7 +21,6 @@ const Index = () => {
       <main>
         <AnimatedGate
           ready={heroVideoReady}
-          minDisplayMs={1000}
           onOpenStart={(reason) => {
             if (reason === 'timeout') {
               setForceHeroContent(true);
