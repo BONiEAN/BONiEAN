@@ -105,7 +105,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
 
       {showGate && (
         <div
-          className="fixed inset-0 z-[9999] overflow-hidden bg-[#221F26]"
+          className="fixed inset-0 z-[9999] overflow-hidden"
           data-boniean-gate="loading"
           data-gate-opening={opening ? 'true' : 'false'}
           data-gate-ready={ready ? 'true' : 'false'}
@@ -138,8 +138,11 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
             }
           `}</style>
 
-          {/* Subtle technical background. */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(249,115,22,0.20),transparent_34%),radial-gradient(circle_at_20%_20%,rgba(254,198,161,0.12),transparent_28%),linear-gradient(135deg,#221F26_0%,#17141b_48%,#221F26_100%)]" />
+          {/* Subtle technical background — clipped center strip lets iOS see the video. */}
+          <div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(249,115,22,0.20),transparent_34%),radial-gradient(circle_at_20%_20%,rgba(254,198,161,0.12),transparent_28%),linear-gradient(135deg,#221F26_0%,#17141b_48%,#221F26_100%)]"
+            style={{ clipPath: 'inset(0 calc(50% - 28px) 0 calc(50% - 28px))' }}
+          />
           <div
             className="absolute inset-0 opacity-[0.13]"
             style={{
@@ -147,6 +150,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
                 'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
               backgroundSize: '44px 44px',
               animation: 'gate-grid-drift 6s linear infinite',
+              clipPath: 'inset(0 calc(50% - 28px) 0 calc(50% - 28px))',
             }}
           />
 
