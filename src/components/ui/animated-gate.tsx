@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Boniean3DLogo } from './boniean-3d-logo';
 
 type GateOpenReason = 'ready' | 'timeout';
 
@@ -105,54 +104,19 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
 
       {showGate && (
         <div
-          className="fixed inset-0 z-[9999] overflow-hidden"
+          className="fixed inset-0 z-[9999] overflow-hidden bg-[#221F26]"
           data-boniean-gate="loading"
           data-gate-opening={opening ? 'true' : 'false'}
           data-gate-ready={ready ? 'true' : 'false'}
           aria-hidden="true"
         >
           <style>{`
-            @keyframes gate-pulse {
-              0%, 100% { transform: scale(1); opacity: 0.92; }
-              50% { transform: scale(1.035); opacity: 1; }
-            }
-            @keyframes gate-scan {
-              0% { transform: translateX(-120%); opacity: 0; }
-              20% { opacity: 1; }
-              80% { opacity: 1; }
-              100% { transform: translateX(120%); opacity: 0; }
-            }
-            @keyframes gate-grid-drift {
-              from { transform: translate3d(0, 0, 0); }
-              to { transform: translate3d(44px, 44px, 0); }
-            }
             @keyframes gate-logo-lock {
               0% { opacity: 0; transform: translateY(10px) scale(0.96); filter: blur(8px); }
               55% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
               100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
             }
-            @keyframes gate-line-arm {
-              0% { transform: scaleX(0); opacity: 0; }
-              45% { opacity: 1; }
-              100% { transform: scaleX(1); opacity: 1; }
-            }
           `}</style>
-
-          {/* Subtle technical background — clipped center strip lets iOS see the video. */}
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(249,115,22,0.20),transparent_34%),radial-gradient(circle_at_20%_20%,rgba(254,198,161,0.12),transparent_28%),linear-gradient(135deg,#221F26_0%,#17141b_48%,#221F26_100%)]"
-            style={{ clipPath: 'inset(0 calc(50% - 28px) 0 calc(50% - 28px))' }}
-          />
-          <div
-            className="absolute inset-0 opacity-[0.13]"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
-              backgroundSize: '44px 44px',
-              animation: 'gate-grid-drift 6s linear infinite',
-              clipPath: 'inset(0 calc(50% - 28px) 0 calc(50% - 28px))',
-            }}
-          />
 
           {/* Gate halves. */}
           <div
@@ -180,22 +144,12 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
               opening ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'
             }`}
           >
-            <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-orange-300/35 bg-white/[0.055] shadow-[0_0_70px_rgba(249,115,22,0.28)] backdrop-blur-md" style={{ animation: 'gate-pulse 1.8s ease-in-out infinite' }}>
-              <div className="absolute inset-3 rounded-full border border-white/10" />
-              <div className="absolute h-px w-[190vw] origin-center bg-gradient-to-r from-transparent via-orange-400/55 to-transparent" style={{ animation: 'gate-line-arm 700ms ease-out 280ms both' }} />
-              <div className="absolute h-[190vw] w-px origin-center bg-gradient-to-b from-transparent via-orange-300/15 to-transparent" />
-              <div className="absolute inset-2 z-10">
-                <Boniean3DLogo speed={0.45} style={{ width: '100%', height: '100%' }} />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/12 to-transparent" style={{ animation: 'gate-scan 1.25s ease-in-out 250ms both' }} />
-            </div>
-
-            <div className="mt-7 text-center" style={{ animation: 'gate-logo-lock 780ms ease-out 120ms both' }}>
+            <div className="text-center" style={{ animation: 'gate-logo-lock 780ms ease-out 120ms both' }}>
               <div className="text-sm font-semibold uppercase tracking-[0.42em] text-orange-200/90 sm:text-base">
                 BONiEAN
               </div>
               <div className="mt-2 text-xs uppercase tracking-[0.28em] text-orange-50/70 sm:text-sm">
-                Systems Online
+                Digital Solutions
               </div>
             </div>
           </div>
