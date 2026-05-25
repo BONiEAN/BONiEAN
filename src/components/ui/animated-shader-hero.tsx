@@ -9,6 +9,10 @@ interface HeroProps {
     secondary?: { text: string; onClick?: () => void };
   };
   className?: string;
+  /** Tells the outer gate that the video has enough data to show frames.
+   *  Fires on readyState >= HAVE_CURRENT_DATA.  The gate opens on this,
+   *  so the video becomes visible and autoplay can proceed on iOS. */
+  onVideoDataReady?: () => void;
   /** Tells the outer gate that actual video playback has started. */
   onVideoReady?: () => void;
   /** Lets the outer gate reveal text immediately if media playback times out. */
@@ -24,20 +28,26 @@ const Hero: React.FC<HeroProps> = ({
   subtitle,
   buttons,
   className = "",
+  onVideoDataReady,
   onVideoReady,
   forceShowContent,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const dataReadySentRef = useRef(false);
   const gateReadySentRef = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
   /**
-   * Called ONLY when actual playback is confirmed:
-   *   !paused && !ended && readyState >= HAVE_CURRENT_DATA
-   * Never call this from canplay/loadeddata handlers — those only retry play().
-   * Never call this from a resolved play() promise without verifying DOM state.
+   * Called when the video has enough data to paint at least one frame
+   * (readyState >= HAVE_CURRENT_DATA).  This is the signal for the gate
+   * to open — once the video is visible, autoplay can proceed on iOS.
    */
+  const markVideoDataReady = useCallback(() => {
+    if (dataReadySentRef.current) return;
+    dataReadySentRef.current = true;
+    onVideoDataReady?.();
+  }, [onVideoDataReady]);
   const markPlaybackStarted = useCallback(() => {
     setVideoReady(true);
     setShowContent(true);
@@ -142,16 +152,18 @@ const Hero: React.FC<HeroProps> = ({
   }, [kickVideo]);
 
   const handleLoadedData = useCallback(() => {
+    markVideoDataReady();
     kickVideo();
-  }, [kickVideo]);
+  }, [kickVideo, markVideoDataReady]);
 
   const handleCanPlay = useCallback(() => {
-    // Do NOT open the gate here. Safari can fire canplay, then pause/block
-    // autoplay. Opening the gate on canplay = showing a paused video with
-    // a play button. Just retry play() and let actual playback events
-    // (onPlaying, timeupdate→syncPlaybackState) drive gate opening.
+    // Gate opens when video has data (readyState >= 2), not when playback
+    // starts.  iOS frequently fires canplay then defers autoplay until the
+    // video is visible — by opening the gate here, the video becomes visible
+    // so autoplay can proceed.  The shield covers the gap until actual playback.
+    markVideoDataReady();
     kickVideo();
-  }, [kickVideo]);
+  }, [kickVideo, markVideoDataReady]);
 
   const handlePlaying = useCallback(() => {
     syncPlaybackState();

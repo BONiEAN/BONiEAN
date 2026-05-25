@@ -11,7 +11,7 @@ import { ClientLogos } from "@/components/ClientLogs";
 import { AnimatedGate } from "@/components/ui/animated-gate";
 
 const Index = () => {
-  const [heroVideoReady, setHeroVideoReady] = useState(false);
+  const [heroDataReady, setHeroDataReady] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -19,12 +19,12 @@ const Index = () => {
 
       <main>
         <AnimatedGate
-          ready={heroVideoReady}
+          ready={heroDataReady}
           openOnlyWhenReady
           minDisplayMs={1000}
         >
           <Hero
-            onVideoReady={() => setHeroVideoReady(true)}
+            onVideoDataReady={() => setHeroDataReady(true)}
           />
         </AnimatedGate>
         <WhatWeDo />
