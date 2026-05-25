@@ -9,8 +9,6 @@ interface HeroProps {
     secondary?: { text: string; onClick?: () => void };
   };
   className?: string;
-  /** Tells the outer gate that the video has a paintable first frame. */
-  onVideoFrameReady?: () => void;
   /** Tells the outer gate that actual video playback has started. */
   onVideoReady?: () => void;
   /** Lets the outer gate reveal text immediately if media playback times out. */
@@ -26,46 +24,29 @@ const Hero: React.FC<HeroProps> = ({
   subtitle,
   buttons,
   className = "",
-  onVideoFrameReady,
   onVideoReady,
   forceShowContent,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const frameReadySentRef = useRef(false);
-  const playbackReadySentRef = useRef(false);
-  const [videoFrameReady, setVideoFrameReady] = useState(false);
+  const gateReadySentRef = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
-  const markVideoFrameReady = useCallback(() => {
-    setVideoFrameReady(true);
-    setShowContent(true);
-
-    if (!frameReadySentRef.current) {
-      frameReadySentRef.current = true;
-      onVideoFrameReady?.();
-    }
-  }, [onVideoFrameReady]);
-
+  /**
+   * Called ONLY when actual playback is confirmed:
+   *   !paused && !ended && readyState >= HAVE_CURRENT_DATA
+   * Never call this from canplay/loadeddata handlers — those only retry play().
+   * Never call this from a resolved play() promise without verifying DOM state.
+   */
   const markPlaybackStarted = useCallback(() => {
-    markVideoFrameReady();
     setVideoReady(true);
     setShowContent(true);
 
-    if (!playbackReadySentRef.current) {
-      playbackReadySentRef.current = true;
+    if (!gateReadySentRef.current) {
+      gateReadySentRef.current = true;
       onVideoReady?.();
     }
-  }, [markVideoFrameReady, onVideoReady]);
-
-  const syncFrameState = useCallback(() => {
-    const video = videoRef.current;
-    if (video && video.readyState >= HAVE_CURRENT_DATA) {
-      markVideoFrameReady();
-      return true;
-    }
-    return false;
-  }, [markVideoFrameReady]);
+  }, [onVideoReady]);
 
   const hasPlaybackStarted = useCallback(() => {
     const video = videoRef.current;
@@ -78,13 +59,12 @@ const Hero: React.FC<HeroProps> = ({
   }, []);
 
   const syncPlaybackState = useCallback(() => {
-    syncFrameState();
     if (hasPlaybackStarted()) {
       markPlaybackStarted();
       return true;
     }
     return false;
-  }, [hasPlaybackStarted, markPlaybackStarted, syncFrameState]);
+  }, [hasPlaybackStarted, markPlaybackStarted]);
 
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
@@ -102,13 +82,17 @@ const Hero: React.FC<HeroProps> = ({
     video.setAttribute('disablepictureinpicture', '');
     video.setAttribute('controlslist', 'nodownload noplaybackrate noremoteplayback');
 
-    syncFrameState();
-
     const playPromise = video.play();
     if (playPromise && typeof playPromise.then === 'function') {
       playPromise
         .then(() => {
-          syncPlaybackState();
+          // play() resolved, but the video might still be paused
+          // (browser accepted the request, not necessarily rendering frames).
+          // Only mark ready if DOM state confirms real playback.
+          if (!syncPlaybackState()) {
+            // Video not actually playing yet — shield stays up.
+            // The timeupdate/playing events will pick it up shortly.
+          }
         })
         .catch(() => {
           // If iOS Low Power Mode or autoplay policy blocks playback, keep the
@@ -122,7 +106,7 @@ const Hero: React.FC<HeroProps> = ({
     } else {
       syncPlaybackState();
     }
-  }, [syncFrameState, syncPlaybackState]);
+  }, [syncPlaybackState]);
 
   const kickVideo = useCallback(() => {
     attemptPlay();
@@ -158,14 +142,16 @@ const Hero: React.FC<HeroProps> = ({
   }, [kickVideo]);
 
   const handleLoadedData = useCallback(() => {
-    markVideoFrameReady();
     kickVideo();
-  }, [kickVideo, markVideoFrameReady]);
+  }, [kickVideo]);
 
   const handleCanPlay = useCallback(() => {
-    markVideoFrameReady();
+    // Do NOT open the gate here. Safari can fire canplay, then pause/block
+    // autoplay. Opening the gate on canplay = showing a paused video with
+    // a play button. Just retry play() and let actual playback events
+    // (onPlaying, timeupdate→syncPlaybackState) drive gate opening.
     kickVideo();
-  }, [kickVideo, markVideoFrameReady]);
+  }, [kickVideo]);
 
   const handlePlaying = useCallback(() => {
     syncPlaybackState();
@@ -241,7 +227,6 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <div
       className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}
-      data-hero-video-frame-ready={videoFrameReady ? 'true' : 'false'}
       data-hero-video-ready={videoReady ? 'true' : 'false'}
     >
       <style>{`
@@ -307,10 +292,13 @@ const Hero: React.FC<HeroProps> = ({
         <source src="/boniean-shader-loop.webm" type="video/webm" />
       </video>
 
+      {/* Fallback shield — hides the video until actual playback starts.
+          This prevents Safari's native play button from appearing over
+          a paused video when the gate opens. */}
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 z-[1] transition-opacity duration-500 ${
-          videoFrameReady ? 'opacity-0' : 'opacity-100'
+          videoReady ? 'opacity-0' : 'opacity-100'
         }`}
         style={{
           background:

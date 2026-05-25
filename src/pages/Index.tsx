@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { WhatWeDo } from "@/components/WhatWeDo";
@@ -11,9 +11,7 @@ import { ClientLogos } from "@/components/ClientLogs";
 import { AnimatedGate } from "@/components/ui/animated-gate";
 
 const Index = () => {
-  const [heroCanReveal, setHeroCanReveal] = useState(false);
-
-  const markHeroCanReveal = useCallback(() => setHeroCanReveal(true), []);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -21,13 +19,12 @@ const Index = () => {
 
       <main>
         <AnimatedGate
-          ready={heroCanReveal}
+          ready={heroVideoReady}
           openOnlyWhenReady
           minDisplayMs={1000}
         >
           <Hero
-            onVideoFrameReady={markHeroCanReveal}
-            onVideoReady={markHeroCanReveal}
+            onVideoReady={() => setHeroVideoReady(true)}
           />
         </AnimatedGate>
         <WhatWeDo />

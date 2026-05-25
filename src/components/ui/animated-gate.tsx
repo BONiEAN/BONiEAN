@@ -175,6 +175,7 @@ export const AnimatedGate: React.FC<AnimatedGateProps> = ({
       {showGate && (
         <div
           className="fixed inset-0 z-[9999] overflow-hidden"
+          style={{ opacity: 0.995 }}
           data-boniean-gate="loading"
           data-gate-opening={opening ? 'true' : 'false'}
           data-gate-ready={ready ? 'true' : 'false'}

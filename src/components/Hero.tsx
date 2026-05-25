@@ -2,12 +2,11 @@ import AnimatedShaderHero from './ui/animated-shader-hero';
 import { useNavigate } from 'react-router-dom';
 
 interface HeroProps {
-  onVideoFrameReady?: () => void;
   onVideoReady?: () => void;
   forceShowContent?: boolean;
 }
 
-export const Hero = ({ onVideoFrameReady, onVideoReady, forceShowContent }: HeroProps = {}) => {
+export const Hero = ({ onVideoReady, forceShowContent }: HeroProps = {}) => {
   const navigate = useNavigate();
 
   return (
@@ -31,7 +30,6 @@ export const Hero = ({ onVideoFrameReady, onVideoReady, forceShowContent }: Hero
           onClick: () => navigate('/services')
         }
       }}
-      onVideoFrameReady={onVideoFrameReady}
       onVideoReady={onVideoReady}
       forceShowContent={forceShowContent}
     />
