@@ -9,6 +9,8 @@ interface HeroProps {
     secondary?: { text: string; onClick?: () => void };
   };
   className?: string;
+  /** Tells the outer gate that the video has a paintable first frame. */
+  onVideoFrameReady?: () => void;
   /** Tells the outer gate that actual video playback has started. */
   onVideoReady?: () => void;
   /** Lets the outer gate reveal text immediately if media playback times out. */
@@ -24,23 +26,46 @@ const Hero: React.FC<HeroProps> = ({
   subtitle,
   buttons,
   className = "",
+  onVideoFrameReady,
   onVideoReady,
   forceShowContent,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const gateReadySentRef = useRef(false);
+  const frameReadySentRef = useRef(false);
+  const playbackReadySentRef = useRef(false);
+  const [videoFrameReady, setVideoFrameReady] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
+  const markVideoFrameReady = useCallback(() => {
+    setVideoFrameReady(true);
+    setShowContent(true);
+
+    if (!frameReadySentRef.current) {
+      frameReadySentRef.current = true;
+      onVideoFrameReady?.();
+    }
+  }, [onVideoFrameReady]);
+
   const markPlaybackStarted = useCallback(() => {
+    markVideoFrameReady();
     setVideoReady(true);
     setShowContent(true);
 
-    if (!gateReadySentRef.current) {
-      gateReadySentRef.current = true;
+    if (!playbackReadySentRef.current) {
+      playbackReadySentRef.current = true;
       onVideoReady?.();
     }
-  }, [onVideoReady]);
+  }, [markVideoFrameReady, onVideoReady]);
+
+  const syncFrameState = useCallback(() => {
+    const video = videoRef.current;
+    if (video && video.readyState >= HAVE_CURRENT_DATA) {
+      markVideoFrameReady();
+      return true;
+    }
+    return false;
+  }, [markVideoFrameReady]);
 
   const hasPlaybackStarted = useCallback(() => {
     const video = videoRef.current;
@@ -53,12 +78,13 @@ const Hero: React.FC<HeroProps> = ({
   }, []);
 
   const syncPlaybackState = useCallback(() => {
+    syncFrameState();
     if (hasPlaybackStarted()) {
       markPlaybackStarted();
       return true;
     }
     return false;
-  }, [hasPlaybackStarted, markPlaybackStarted]);
+  }, [hasPlaybackStarted, markPlaybackStarted, syncFrameState]);
 
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
@@ -76,11 +102,13 @@ const Hero: React.FC<HeroProps> = ({
     video.setAttribute('disablepictureinpicture', '');
     video.setAttribute('controlslist', 'nodownload noplaybackrate noremoteplayback');
 
+    syncFrameState();
+
     const playPromise = video.play();
     if (playPromise && typeof playPromise.then === 'function') {
       playPromise
         .then(() => {
-          markPlaybackStarted();
+          syncPlaybackState();
         })
         .catch(() => {
           // If iOS Low Power Mode or autoplay policy blocks playback, keep the
@@ -94,7 +122,7 @@ const Hero: React.FC<HeroProps> = ({
     } else {
       syncPlaybackState();
     }
-  }, [markPlaybackStarted, syncPlaybackState]);
+  }, [syncFrameState, syncPlaybackState]);
 
   const kickVideo = useCallback(() => {
     attemptPlay();
@@ -130,16 +158,18 @@ const Hero: React.FC<HeroProps> = ({
   }, [kickVideo]);
 
   const handleLoadedData = useCallback(() => {
+    markVideoFrameReady();
     kickVideo();
-  }, [kickVideo]);
+  }, [kickVideo, markVideoFrameReady]);
 
   const handleCanPlay = useCallback(() => {
+    markVideoFrameReady();
     kickVideo();
-  }, [kickVideo]);
+  }, [kickVideo, markVideoFrameReady]);
 
   const handlePlaying = useCallback(() => {
-    markPlaybackStarted();
-  }, [markPlaybackStarted]);
+    syncPlaybackState();
+  }, [syncPlaybackState]);
 
   const handlePause = useCallback(() => {
     const video = videoRef.current;
@@ -211,6 +241,7 @@ const Hero: React.FC<HeroProps> = ({
   return (
     <div
       className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}
+      data-hero-video-frame-ready={videoFrameReady ? 'true' : 'false'}
       data-hero-video-ready={videoReady ? 'true' : 'false'}
     >
       <style>{`
@@ -279,7 +310,7 @@ const Hero: React.FC<HeroProps> = ({
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 z-[1] transition-opacity duration-500 ${
-          videoReady ? 'opacity-0' : 'opacity-100'
+          videoFrameReady ? 'opacity-0' : 'opacity-100'
         }`}
         style={{
           background:
