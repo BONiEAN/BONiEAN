@@ -205,7 +205,10 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <div
-      className={`relative w-full h-screen overflow-hidden bg-[#221F26] ${className}`}
+      className={`relative w-full h-screen overflow-hidden ${className}`}
+      style={{
+        background: 'radial-gradient(ellipse at 50% 45%, rgba(249,115,22,0.18) 0%, transparent 48%), linear-gradient(160deg, #221F26 0%, #17131d 48%, #221F26 100%)',
+      }}
       data-hero-video-ready={videoReady ? 'true' : 'false'}
     >
       <style>{`
