@@ -174,7 +174,10 @@ const Hero: React.FC<HeroProps> = ({
     );
 
     // Fallback: show content after 4s even if video hasn't loaded (mobile/slow)
-    const fallback = window.setTimeout(() => setShowContent(true), 4000);
+    const fallback = window.setTimeout(() => {
+      setShowContent(true);
+      setVideoReady(true);
+    }, 4000);
 
     const handleVisibilityChange = () => {
       if (!document.hidden) {
