@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#221F26" />
+    <script>
+      (() => {
+        const video = document.createElement('video');
+        const canPlayHevc = video.canPlayType('video/mp4; codecs="hvc1"');
+        const preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'video';
+        preload.type = 'video/mp4';
+        preload.href = canPlayHevc ? '/boniean-shader-loop-hevc.mp4' : '/boniean-shader-loop.mp4';
+        document.head.appendChild(preload);
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="./lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" sizes="256x256">
+    <title>BONiEAN</title>
+    <meta name="description" content="Boniean is a platform for creating and sharing AI-powered projects." />
+    <meta name="author" content="Ahmed Gawish" />
+    <meta property="og:image" content="/lovable-uploads/f1fb860b-ad12-4e29-a825-07c31830a2fb.png" />
+    <script type="module" crossorigin src="./assets/index-D4zpuzu-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DUAeF8Qd.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+   
+  </body>
+</html>
